@@ -5,109 +5,152 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rank</title>
   <style>
-    :root {
-      font-size: 16px;
-    }
-
+    :root { font-size: 16px; }
     body {
       margin: 0;
       padding: 0;
-      font-family: sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       background-color: #fff;
-    }
-
-    .container {
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 1.5rem;
-      padding-bottom: 7rem;
-    }
-
-    h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
-
-    .tabs {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .tabs button {
-      flex: 1;
-      padding: 0.5rem;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      background-color: #fff;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .rank-wrapper {
       display: flex;
       justify-content: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 480px;
+      padding: 1rem;
+      padding-bottom: 6rem;
+      box-sizing: border-box;
+    }
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #444;
+    }
+    .tabs {
+      display: flex;
+      background-color: #1E90FF;
+      border-radius: 1rem;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    .tabs button {
+      flex: 1;
+      padding: 0.75rem 0;
+      font-size: 1rem;
+      color: #fff;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .tabs button.active {
+      text-decoration: underline;
+    }
+    .rank-wrapper {
+      display: flex;
+      justify-content: space-around;
       align-items: flex-end;
-      gap: 2rem;
-      margin: 2rem 0;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    /* 중앙 원 위로, 사이드 원 아래로 배치 */
+    .rank-item:nth-child(2) {
+      margin-bottom: 1.5rem;
+    }
+    .rank-item:nth-child(1),
+    .rank-item:nth-child(3) {
+      margin-top: 0.75rem;
     }
 
     .rank-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      position: relative;
       font-size: 0.9rem;
+      position: relative;
     }
-
+    .rank-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.9rem;
+      position: relative;
+    }
     .circle {
-      width: 6rem;
-      height: 6rem;
+      width: 4rem;
+      height: 4rem;
       border-radius: 50%;
-      background-color: #1e90ff;
+      background-color: #1E90FF;
       color: #fff;
       font-weight: 700;
-      font-size: 1.25rem;
+      font-size: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-bottom: 0.5rem;
     }
-
     .circle sup {
-      font-size: 0.625rem;
+      font-size: 0.6rem;
       margin-left: 2px;
     }
-
-    .first .crown {
+    .label {
+      text-align: center;
+      color: #444;
+      line-height: 1.2;
+      font-size: 0.875rem;
+    }
+    .rank-item:nth-child(2) img.crown {
       position: absolute;
-      top: -2rem;
-      width: 2rem;
+      top: -1.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1.6rem;
       height: auto;
     }
-
-    .first {
-      margin-bottom: 1.5rem;
+    .list-container {
+      background-color: #E7F0FF;
+      border-radius: 1.5rem;
+      padding: 0.75rem 0;
+      box-sizing: border-box;
     }
-
-    .second,
-    .third {
-      margin-top: 1rem;
+    .list-header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0 1rem;
+      font-size: 0.875rem;
+      color: #444;
+      margin-bottom: 0.5rem;
     }
-
+    .list-header label {
+      margin-right: 0.5rem;
+    }
+    .list-header select {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
     .rank-list {
-      margin-top: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      margin-top: 0.5rem;
+    }
+    .rank-list li {
+      background: #fff;
+      border-radius: 1rem;
       width: 85%;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .rank-list div {
+      margin: 0.6rem auto;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       font-size: 0.95rem;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid #eee;
+      font-weight: 500;
+      color: #444;
     }
-
     iframe.bottom-nav {
       width: 100%;
       height: 64px;
@@ -117,11 +160,8 @@
       left: 0;
       z-index: 1000;
     }
-
     @media screen and (max-width: 480px) {
-      :root {
-        font-size: 4vw;
-      }
+      :root { font-size: 4vw; }
     }
   </style>
 </head>
@@ -129,36 +169,56 @@
   <div class="container">
     <h2>Leaderboard</h2>
     <div class="tabs">
-      <button>Class</button>
-      <button>Individual</button>
+      <button>class</button>
+      <button>individual</button>
     </div>
-
     <div class="rank-wrapper">
-      <div class="rank-item second">
+      <div class="rank-item">
         <div class="circle">2<sup>nd</sup></div>
-        <div>2-1<br>40 pts</div>
+        <div class="label">2-1<br><span style="font-size:0.75rem; color:#888;">40 pts</span></div>
       </div>
-      <div class="rank-item first">
+      <div class="rank-item">
         <img src="images/crown.png" class="crown" alt="Crown">
         <div class="circle">1<sup>st</sup></div>
-        <div>3-1<br>43 pts</div>
+        <div class="label">3-1<br><span style="font-size:0.75rem; color:#888;">43 pts</span></div>
       </div>
-      <div class="rank-item third">
+      <div class="rank-item">
         <div class="circle">3<sup>rd</sup></div>
-        <div>1-1<br>38 pts</div>
+        <div class="label">1-1<br><span style="font-size:0.75rem; color:#888;">38 pts</span></div>
       </div>
     </div>
 
-    <div class="rank-list">
-      <div>4. x-x - 36 pts</div>
-      <div>5. x-x - 35 pts</div>
-      <div>6. x-x - 34 pts</div>
-      <div>7. x-x - 33 pts</div>
-      <div>8. x-x - 32 pts</div>
-      <div>9. x-x - 31 pts</div>
+    <div class="list-container">
+      <div class="list-header">
+        <label for="sort">정렬:</label>
+        <select id="sort" name="sort">
+          <option value="submission">제출장순</option>
+        </select>
+      </div>
+      <ul class="rank-list">
+        <li><span>4. x-x</span><span>36 pts</span></li>
+        <li><span>5. x-x</span><span>35 pts</span></li>
+        <li><span>6. x-x</span><span>34 pts</span></li>
+        <li><span>7. x-x</span><span>33 pts</span></li>
+        <li><span>8. x-x</span><span>32 pts</span></li>
+        <li><span>9. x-x</span><span>31 pts</span></li>
+        <li><span>10. x-x</span><span>30 pts</span></li>
+        <li><span>11. x-x</span><span>29 pts</span></li>
+        <li><span>12. x-x</span><span>28 pts</span></li>
+        <li><span>13. x-x</span><span>27 pts</span></li>
+        <li><span>14. x-x</span><span>26 pts</span></li>
+        <li><span>15. x-x</span><span>25 pts</span></li>
+        <li><span>16. x-x</span><span>24 pts</span></li>
+        <li><span>17. x-x</span><span>23 pts</span></li>
+        <li><span>18. x-x</span><span>22 pts</span></li>
+        <li><span>19. x-x</span><span>21 pts</span></li>
+        <li><span>20. x-x</span><span>20 pts</span></li>
+        <li><span>21. x-x</span><span>19 pts</span></li>
+        <li><span>22. x-x</span><span>18 pts</span></li>
+        <li><span>23. x-x</span><span>17 pts</span></li>
+      </ul>
     </div>
   </div>
-
   <iframe class="bottom-nav" src="bottom_nav.html"></iframe>
 </body>
 </html>
