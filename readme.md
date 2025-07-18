@@ -1,5 +1,7 @@
 피그마 순서대로
-[Explore 페이지로 이동](https://www.figma.com/proto/HoYLWet5EQFtKC62eX6oMr/Mobile-Apps-%E2%80%93-Prototyping-Kit--Community-?node-id=1244-564&t=98KSDPor6yd7kVmi-1&scaling=scale-down&content-scaling=fixed&page-id=1203%3A1581 "피그마로 이동")
+[피그마 텔포타기](https://www.figma.com/proto/HoYLWet5EQFtKC62eX6oMr/Mobile-Apps-%E2%80%93-Prototyping-Kit--Community-?node-id=1244-564&t=98KSDPor6yd7kVmi-1&scaling=scale-down&content-scaling=fixed&page-id=1203%3A1581 "피그마로 이동")
+[노션 텔포타기](https://www.notion.so/23035b9640d880fb938ed850654fd94a "노션으로 이동")
+
 
 login.html
 register.html
