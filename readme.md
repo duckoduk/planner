@@ -1,0 +1,9 @@
+login.html
+register.html
+rank.html(leaderboard)
+post_leaderboard.html
+explore.html(planner_view)
+profile.html
+post.html
+post_detail.html
+post_feed.html

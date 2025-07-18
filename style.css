@@ -1,0 +1,122 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+}
+
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-box, .image-upload, .image-display, .image-preview {
+  width: 100%;
+  height: 150px;
+  background-color: #e7f0ff;
+  margin-bottom: 1rem;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.btn {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  width: 100%;
+}
+
+.card {
+  background-color: #f0f0f0;
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.tabs button {
+  margin: 0 0.5rem;
+}
+
+.event-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.leaderboard {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.rank-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.bar {
+  background-color: #e0e0e0;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.bar div {
+  height: 100%;
+  background-color: #4da8ff;
+}
+
+.post-list {
+  width: 100%;
+}
+
+.post-card {
+  display: flex;
+  align-items: center;
+  background-color: #e7f0ff;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.post-card .image-preview {
+  width: 60px;
+  height: 60px;
+  background-color: #cfe0ff;
+  margin-right: 1rem;
+  border-radius: 8px;
+}
+
+.post-card .info p {
+  margin: 0.2rem 0;
+}
