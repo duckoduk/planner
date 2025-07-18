@@ -22,18 +22,20 @@
       box-sizing: border-box;
     }
     h2 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      text-align: center;
-      margin-bottom: 1rem;
-      color: #444;
-    }
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+  color: #444;
+  /* 아래 두 줄만 추가/수정 */
+  margin-top: 4rem;    /* 위쪽 여백을 4rem만큼 추가 */
+  margin-bottom: 1rem; /* 기존 아랫여백 */
+}
     .tabs {
       display: flex;
       background-color: #1E90FF;
       border-radius: 1rem;
       overflow: hidden;
-      margin-bottom: 2rem;
+      margin-bottom: 4rem;
     }
     .tabs button {
       flex: 1;
@@ -78,8 +80,8 @@
       position: relative;
     }
     .circle {
-      width: 4rem;
-      height: 4rem;
+      width: 5rem;
+      height: 5rem;
       border-radius: 50%;
       background-color: #1E90FF;
       color: #fff;
@@ -91,26 +93,28 @@
       margin-bottom: 0.5rem;
     }
     .circle sup {
-      font-size: 0.6rem;
+      font-size: 1rem;
       margin-left: 2px;
+      font-weight: 700;
     }
     .label {
       text-align: center;
       color: #444;
       line-height: 1.2;
-      font-size: 0.875rem;
+      font-size: 1rem;
+      font-weight: 700;
     }
     .rank-item:nth-child(2) img.crown {
       position: absolute;
       top: -1.2rem;
       left: 50%;
       transform: translateX(-50%);
-      width: 1.6rem;
+      width: 2.5rem;
       height: auto;
     }
     .list-container {
       background-color: #E7F0FF;
-      border-radius: 1.5rem;
+      border-radius: 3rem;
       padding: 0.75rem 0;
       box-sizing: border-box;
     }
@@ -122,6 +126,7 @@
       font-size: 0.875rem;
       color: #444;
       margin-bottom: 0.5rem;
+      margin-top: 1rem;
     }
     .list-header label {
       margin-right: 0.5rem;
@@ -148,7 +153,7 @@
       justify-content: space-between;
       align-items: center;
       font-size: 0.95rem;
-      font-weight: 500;
+      font-weight: 700;
       color: #444;
     }
     iframe.bottom-nav {
@@ -160,6 +165,43 @@
       left: 0;
       z-index: 1000;
     }
+
+    /* tabs 가운데 세로선 넣기 */
+.tabs button + button {
+  position: relative;
+}
+.rank-item .label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #444;
+  margin-bottom: 0.25rem;
+}
+
+.rank-item .sub-info {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.rank-item .note-icon {
+  width: 1.25rem;    /* 20px */
+  height: auto;
+  margin-right: 0.25rem; /* 4px */
+  opacity: 0.8;
+}
+
+
+.tabs button + button::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5rem;      /* 탭 패딩만큼 위쪽 여백 */
+  bottom: 0.5rem;   /* 탭 패딩만큼 아래쪽 여백 */
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.7); /* 흰색 반투명 선 */
+}
+
     @media screen and (max-width: 480px) {
       :root { font-size: 4vw; }
     }
@@ -167,26 +209,38 @@
 </head>
 <body>
   <div class="container">
-    <h2>Leaderboard</h2>
+    <h2 style="margin-top: 3rem;">Leaderboard</h2>
     <div class="tabs">
       <button>class</button>
       <button>individual</button>
     </div>
     <div class="rank-wrapper">
-      <div class="rank-item">
-        <div class="circle">2<sup>nd</sup></div>
-        <div class="label">2-1<br><span style="font-size:0.75rem; color:#888;">40 pts</span></div>
-      </div>
-      <div class="rank-item">
-        <img src="images/rank/crown.png" class="crown" alt="Crown">
-        <div class="circle">1<sup>st</sup></div>
-        <div class="label">3-1<br><span style="font-size:0.75rem; color:#888;">43 pts</span></div>
-      </div>
-      <div class="rank-item">
-        <div class="circle">3<sup>rd</sup></div>
-        <div class="label">1-1<br><span style="font-size:0.75rem; color:#888;">38 pts</span></div>
-      </div>
+  <div class="rank-item">
+    <div class="circle">2<sup>nd</sup></div>
+    <div class="label">2‑1</div>
+    <div class="sub-info">
+      <img src="images/rank/note.png" alt="points icon" class="note-icon">
+      40 pts
     </div>
+  </div>
+  <div class="rank-item">
+    <img src="images/rank/crown.png" class="crown" alt="Crown">
+    <div class="circle" style="margin-top: 0.5rem;">1<sup>st</sup></div>
+    <div class="label">3‑1</div>
+    <div class="sub-info">
+      <img src="images/rank/note.png" alt="points icon" class="note-icon">
+      43 pts
+    </div>
+  </div>
+  <div class="rank-item">
+    <div class="circle">3<sup>rd</sup></div>
+    <div class="label">1‑1</div>
+    <div class="sub-info">
+      <img src="images/rank/note.png" alt="points icon" class="note-icon">
+      38 pts
+    </div>
+  </div>
+</div>
 
     <div class="list-container">
       <div class="list-header">

@@ -1,46 +1,64 @@
+<!-- Bottom Navigation (독립 HTML) -->
 <nav class="bottom-nav">
-  <a href="explore.html" class="nav-item">
-    <img src="images/bottom_nav/explore_icon.png" alt="Explore">
+  <a href="#" class="nav-item active">
+    <img src="images/bottom_nav/explore.png" alt="Explore">
+    <span>explore</span>
   </a>
-  <a href="post.html" class="nav-item">
-    <img src="images/bottom_nav/post_icon.png" alt="Post">
+  <a href="#" class="nav-item">
+    <img src="images/bottom_nav/post.png" alt="Post">
+    <span>post</span>
   </a>
-  <a href="rank.html" class="nav-item">
-    <img src="images/bottom_nav/rank_icon.png" alt="Rank">
+  <a href="#" class="nav-item">
+    <img src="images/bottom_nav/rank.png" alt="Rank">
+    <span>rank</span>
   </a>
-  <a href="profile.html" class="nav-item">
-    <img src="images/bottom_nav/profile_icon.png" alt="Profile">
+  <a href="#" class="nav-item">
+    <img src="images/bottom_nav/profile.png" alt="Profile">
+    <span>profile</span>
   </a>
 </nav>
 
 <style>
   .bottom-nav {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 80px;
+    bottom: 0; left: 0; right: 0;
+    height: 100px;
     background-color: #fff;
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items: flex-end;
+    padding-bottom: 12px;
     border-top: 1px solid #ddd;
+    overflow: visible;
     z-index: 1000;
   }
-
-  .nav-item img {
-    width: 66px;
-    height: 34px;
-    object-fit: contain;
-  }
-
   .nav-item {
+    flex: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
     text-decoration: none;
-    flex: 1;
-    height: 100%;
+  }
+  .nav-item img {
+  width: 1.5rem;      /* 24px */
+  height: 1.875rem;   /* 30px */
+  margin-bottom: 0.25rem; /* 4px */
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+  .nav-item span {
+    font-size: 0.75rem;
+    color: #666;
+    text-transform: lowercase;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .nav-item.active img {
+    opacity: 1;
+  }
+  .nav-item.active span {
+    color: #007aff;
+    font-weight: 600;
   }
 </style>
