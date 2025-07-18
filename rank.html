@@ -3,8 +3,127 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
   <title>Rank</title>
+  <style>
+    :root {
+      font-size: 16px;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background-color: #fff;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      padding-bottom: 7rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .tabs button {
+      flex: 1;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .rank-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .rank-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      font-size: 0.9rem;
+    }
+
+    .circle {
+      width: 6rem;
+      height: 6rem;
+      border-radius: 50%;
+      background-color: #1e90ff;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .circle sup {
+      font-size: 0.625rem;
+      margin-left: 2px;
+    }
+
+    .first .crown {
+      position: absolute;
+      top: -2rem;
+      width: 2rem;
+      height: auto;
+    }
+
+    .first {
+      margin-bottom: 1.5rem;
+    }
+
+    .second,
+    .third {
+      margin-top: 1rem;
+    }
+
+    .rank-list {
+      margin-top: 2rem;
+      width: 85%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .rank-list div {
+      font-size: 0.95rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    iframe.bottom-nav {
+      width: 100%;
+      height: 64px;
+      border: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    @media screen and (max-width: 480px) {
+      :root {
+        font-size: 4vw;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -13,14 +132,33 @@
       <button>Class</button>
       <button>Individual</button>
     </div>
-    <div class="top-ranks">
-      <div>2nd<br>2-1<br>40 pts</div>
-      <div>1st<br>3-1<br>43 pts</div>
-      <div>3rd<br>1-1<br>38 pts</div>
+
+    <div class="rank-wrapper">
+      <div class="rank-item second">
+        <div class="circle">2<sup>nd</sup></div>
+        <div>2-1<br>40 pts</div>
+      </div>
+      <div class="rank-item first">
+        <img src="images/crown.png" class="crown" alt="Crown">
+        <div class="circle">1<sup>st</sup></div>
+        <div>3-1<br>43 pts</div>
+      </div>
+      <div class="rank-item third">
+        <div class="circle">3<sup>rd</sup></div>
+        <div>1-1<br>38 pts</div>
+      </div>
     </div>
+
     <div class="rank-list">
       <div>4. x-x - 36 pts</div>
+      <div>5. x-x - 35 pts</div>
+      <div>6. x-x - 34 pts</div>
+      <div>7. x-x - 33 pts</div>
+      <div>8. x-x - 32 pts</div>
+      <div>9. x-x - 31 pts</div>
     </div>
   </div>
+
+  <iframe class="bottom-nav" src="bottom_nav.html"></iframe>
 </body>
 </html>

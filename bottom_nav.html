@@ -1,0 +1,46 @@
+<nav class="bottom-nav">
+  <a href="explore.html" class="nav-item">
+    <img src="images/bottom_nav/explore_icon.png" alt="Explore">
+  </a>
+  <a href="post.html" class="nav-item">
+    <img src="images/bottom_nav/post_icon.png" alt="Post">
+  </a>
+  <a href="rank.html" class="nav-item">
+    <img src="images/bottom_nav/rank_icon.png" alt="Rank">
+  </a>
+  <a href="profile.html" class="nav-item">
+    <img src="images/bottom_nav/profile_icon.png" alt="Profile">
+  </a>
+</nav>
+
+<style>
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #ddd;
+    z-index: 1000;
+  }
+
+  .nav-item img {
+    width: 66px;
+    height: 34px;
+    object-fit: contain;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-decoration: none;
+    flex: 1;
+    height: 100%;
+  }
+</style>
