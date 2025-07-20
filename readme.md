@@ -16,4 +16,3 @@ gallery.html
 [남은 거]
 bottom_nav 엑티브 된 거 바꾸는거 추가하기(파란 동그래미)
 <br> 문제 있으면 추가 ㄱㄱ
-하단 내비게이션 바에서 explore 아이콘이 profile아이콘이랑 똑같음ㅁ!
