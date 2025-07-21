@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Register</title>
+</head>
+<body>
+  <div class="container">
+    <h2>Sign up</h2>
+<p class="description">Create an account to get started</p>
+
+<label class="input-label">학번</label>
+<input type="text" placeholder="학번">
+
+<label class="input-label">ID</label>
+<input type="text">
+
+<label class="input-label">비밀번호</label>
+<input type="password" placeholder="Create a password">
+<input type="password" placeholder="Confirm password">
+
+
+    <label><input type="checkbox"> I've read and agree with the <a href="#">Terms and Conditions </a> and the  <a href="#">Privacy Policy.</a></label>
+    <button class="btn">Register</button>
+  </div>
+</body>
+
+<style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-box {
+  width: 100%;
+  height: 40vh;
+  background-color: #e7f0ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  align-self: flex-start;
+  width: 100%;
+  text-align: left;
+}
+
+p.description {
+  font-size: 14px;
+  color: #555;
+  margin-top: 4px;
+  margin-bottom: 24px;
+  align-self: flex-start;
+  width: 100%;
+  text-align: left;
+}
+
+label.input-label {
+  font-size: 14px;
+  color: #444;
+  align-self: flex-start;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+input[type="text"] {
+  background-image: none;
+  width: 100%;
+  font-size: 1rem;
+  padding: 1.125rem 0.875rem;
+  margin-bottom: 1.125rem;
+  border-radius: 0.75rem;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+input[type="password"] {
+  background-image: url('images/eye_icon.png');
+  background-repeat: no-repeat;
+  background-position: right 0.875rem center;
+  background-size: 1.25rem 1.25rem;
+  width: 100%;
+  font-size: 1rem;
+  padding: 1.125rem 0.875rem;
+  margin-bottom: 1.125rem;
+  border-radius: 0.75rem;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+label.checkbox-label {
+  font-size: 0.75rem; /* 줄인 폰트 사이즈 */
+  color: #444;
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  width: auto;
+  max-width: 100%;
+  justify-content: flex-start;
+  text-align: left;
+  gap: 0.5rem;
+  line-height: 1.3;
+  align-self: flex-start;
+  white-space: normal; /* 여러 줄은 허용하지만 넘침은 막음 */
+  word-break: break-word;
+}
+
+label.checkbox-label input[type="checkbox"] {
+  margin-right: 0; /* ← 기존 여백 제거 */
+}
+
+input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: #007bff;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border: 2px solid #007bff;
+}
+
+
+
+
+.btn {
+  width: 100%;
+  font-size: 16px;
+  padding: 18px 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 16px;
+  margin-top: 1rem; /* 버튼 위 간격 */
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+p {
+  font-size: 14px;
+  color: #666;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* 모바일 반응형 */
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 16px;
+  }
+  input[type="text"],
+  input[type="password"],
+  .btn {
+    font-size: 15px;
+    padding: 16px 12px;
+    width: 100%;
+  }
+  h2 {
+    font-size: 22px;
+  }
+  .logo-box {
+    height: 35vh;
+  }
+}
+</style>
+</html>
