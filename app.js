@@ -9,7 +9,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // json 데이터 req.body로 접근 가능하게 함
 app.use(express.json())
- 
+//로그인
 app.post('/login', async (req, res) => { // 함수를 async로 변경
     const { number, password } = req.body
  
@@ -45,6 +45,34 @@ app.post('/login', async (req, res) => { // 함수를 async로 변경
             return res.status(401).json({ success: false, message: '비밀번호가 일치하지 않습니다.' });
         }
  
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ success: false, message: '알 수 없는 오류가 발생했습니다.' });
+    }
+})
+
+//회원가입
+app.post('/register', async (req, res) => {
+    const { number, id, password } = req.body;
+
+    try {
+        // 회원가입 로직
+        const { data, error } = await supabase
+            .from('users')
+            .insert([{ student_id: number, username: id, password: password }]) // supabase 저장 해싱 나중에 하겟음.
+            .select()
+            .single();
+
+        if (error) {
+            console.error('회원가입 에러:', error);
+            // 23505=> PostgreSQL의 unique constraint violation 에러 코드임.(colums 항목중에 is unique그거)
+            if (error.code === '23505') {
+                return res.status(409).json({ success: false, message: '이미 사용 중인 학번 또는 ID입니다.' });
+            }
+            return res.status(500).json({ success: false, message: '데이터베이스 오류' });
+        }
+
+        return res.json({ success: true, message: '회원가입 성공!', userId: data.id });
     } catch (err) {
         console.error(err);
         return res.status(500).json({ success: false, message: '알 수 없는 오류가 발생했습니다.' });

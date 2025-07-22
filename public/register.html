@@ -12,19 +12,20 @@
 <p class="description">Create an account to get started</p>
 
 <label class="input-label">학번</label>
-<input type="text" placeholder="학번">
+<input type="number" id ="num" placeholder="학번">
 
 <label class="input-label">ID</label>
-<input type="text">
+<input type="text" id="id" placeholder="ID">
 
 <label class="input-label">비밀번호</label>
-<input type="password" placeholder="Create a password">
-<input type="password" placeholder="Confirm password">
+<input type="password" id="password" placeholder="Create a password">
+<input type="password" id="confirm-password" placeholder="Confirm password">
 
-
-    <label><input type="checkbox"> I've read and agree with the <a href="#">Terms and Conditions </a> and the  <a href="#">Privacy Policy.</a></label>
+<p id="error-message" style="color: red; display: none; align-self: flex-start; width: 100%; text-align: left; margin-top: -10px; margin-bottom: 10px; font-size: 14px;"></p>
+    <label class="checkbox-label"><input type="checkbox" id="terms"> I've read and agree with the <a href="#">Terms and Conditions </a> and the  <a href="#">Privacy Policy.</a></label>
     <button class="btn">Register</button>
   </div>
+  <script src="js/register.js"></script>
 </body>
 
 <style>
@@ -87,6 +88,16 @@ label.input-label {
 }
 
 input[type="text"] {
+  background-image: none;
+  width: 100%;
+  font-size: 1rem;
+  padding: 1.125rem 0.875rem;
+  margin-bottom: 1.125rem;
+  border-radius: 0.75rem;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+input[type="number"] {
   background-image: none;
   width: 100%;
   font-size: 1rem;
