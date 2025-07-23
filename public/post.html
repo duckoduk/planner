@@ -77,7 +77,7 @@
       width: 1.5rem; height: auto; margin-right: .5rem;
     }
     .time-inputs .time-num {
-      width: 1rem;
+      width: 2.5rem;
       border: none;
       text-align: center; font-size: 1rem;
       outline: none;
@@ -153,9 +153,9 @@
       <div class="label">총 공부시간</div>
       <div class="time-inputs">
         <img src="images/post/clock_icon.png" alt="clock icon">
-        <input class="time-num" type="number" min="0" placeholder="  "><span class="time-unit">H</span>
-        <input class="time-num" type="number" min="0" placeholder="  "><span class="time-unit">M</span>
-        <input class="time-num" type="number" min="0" placeholder="  "><span class="time-unit">S</span>
+        <input class="time-num" type="number" min="0" max="23" placeholder="0"><span class="time-unit">H</span>
+        <input class="time-num" type="number" min="0" max="59" placeholder="0"><span class="time-unit">M</span>
+        <input class="time-num" type="number" min="0" max="59" placeholder="0"><span class="time-unit">S</span>
       </div>
     </div>
 
@@ -168,5 +168,26 @@
 
   <!-- 하단 네비 -->
   <iframe class="bottom-nav" src="bottom_nav.html"></iframe>
+
+  <script>
+    // 이미지 업로드 미리보기
+    const uploadArea = document.querySelector('.upload-area'); 
+    const fileInput = uploadArea.querySelector('input[type="file"]');
+    const imagePreview = uploadArea.querySelector('img');
+
+    fileInput.addEventListener('change', function(event) {// 파일이 선택되었을 때
+      const file = event.target.files[0];// 첫 번째 파일을 가져옴
+
+      if (file && file.type.startsWith('image/')) {// 이미지 파일인지 확인
+        const reader = new FileReader();// FileReader 객체 생성
+        reader.onload = function(e) {// 파일 읽기가 완료되면
+          imagePreview.src = e.target.result;// 미리보기 이미지에 설정
+        };
+        reader.readAsDataURL(file);// 파일을 Data URL로 읽음
+      }
+    });
+
+    
+  </script>
 </body>
 </html>
