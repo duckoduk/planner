@@ -74,7 +74,8 @@
       <div class="title" style="margin-top: 2rem;">my page</div>
       <div class="class">3-1</div>
       <div class="id-label">
-        <strong style="font-size: 1.1rem;">ID</strong><br>학번
+        <strong style="font-size: 1.1rem;">ID <span id="username"></span></strong>
+        <br>학번 <span id="student-id"></span>
       </div>
     </div>
 
@@ -189,7 +190,15 @@
 
     </div>
   </div>
-
+  <script>
+    //로컬에서 학번 가져오기
+    const student_id = localStorage.getItem('student_id');
+    const username = localStorage.getItem('username');
+    // 페이지 로드 시 학번과 이름을 표시
+    document.getElementById('student-id').textContent = student_id || '학번 없음';
+    document.getElementById('username').textContent = username || '이름 없음'; 
+    console.log('학번:', student_id, '이름:', username);
+  </script>
   <!-- 바텀 내비게이션 -->
   <iframe class="bottom-nav" src="bottom_nav.html"></iframe>
 </body>
