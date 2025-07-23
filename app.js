@@ -2,9 +2,11 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const port = 5000
-const supabase = require('./supabaseClient') // Supabase 클라이언트 가져오기
 const multer = require('multer');// 파일 업로드를 위한 multer 모듈 가져오기
 const fs = require('fs');// 파일 시스템 모듈 가져오기
+
+require('dotenv').config(); // env 가져오기
+const supabase = require('./supabaseClient');
 
 // static 폴더로 지정
 app.use(express.static(path.join(__dirname, 'public')))
@@ -96,19 +98,25 @@ app.post('/upload-image', upload.single('image'), async (req, res) => {
   try {
     const { student_id, text, total_time } = req.body;
     const file = req.file;
+    // 파일명 변경
+    const ext = path.extname(file.originalname);
+    const newFileName = `${student_id}-${Date.now()}${ext}`;
+    const newFilePath = path.join(file.destination, newFileName);
+    
+    await fs.promises.rename(file.path, newFilePath);
 
-    const storagePath = `${student_id}/${file.filename}`;
-
+    const storagePath = `${student_id}/${newFileName}`;
     // 1. Supabase Storage에 업로드
     const { data, error: uploadError } = await supabase.storage
       .from('planner-image')
-      .upload(storagePath, fs.readFileSync(file.path), {
+      .upload(storagePath, fs.readFileSync(newFilePath), {
         contentType: file.mimetype,
         upsert: false,
       });
 
     if (uploadError) {
       console.error(uploadError);
+      fs.unlinkSync(newFilePath);
       return res.status(500).json({ message: 'Storage 업로드 실패' });
     }
 
@@ -130,7 +138,7 @@ app.post('/upload-image', upload.single('image'), async (req, res) => {
     }
 
     // 4. 임시 파일 제거
-    fs.unlinkSync(file.path);
+    fs.unlinkSync(newFilePath);
 
     return res.json({ message: '업로드 성공!' });
 
