@@ -3,6 +3,8 @@ const app = express()
 const path = require('path')
 const port = 5000
 const supabase = require('./supabaseClient') // Supabase 클라이언트 가져오기
+const multer = require('multer');// 파일 업로드를 위한 multer 모듈 가져오기
+const fs = require('fs');// 파일 시스템 모듈 가져오기
 
 // static 폴더로 지정
 app.use(express.static(path.join(__dirname, 'public')))
@@ -79,6 +81,64 @@ app.post('/register', async (req, res) => {
     }
 })
 
+// 업로드된 파일을 저장할 디렉토리 생성
+const storage = multer.diskStorage({
+  destination: 'uploads/',
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${ext}`;
+    cb(null, uniqueName);
+  },
+});
+const upload = multer({ storage });
+
+app.post('/upload-image', upload.single('image'), async (req, res) => {
+  try {
+    const { student_id, text, total_time } = req.body;
+    const file = req.file;
+
+    const storagePath = `${student_id}/${file.filename}`;
+
+    // 1. Supabase Storage에 업로드
+    const { data, error: uploadError } = await supabase.storage
+      .from('planner-image')
+      .upload(storagePath, fs.readFileSync(file.path), {
+        contentType: file.mimetype,
+        upsert: false,
+      });
+
+    if (uploadError) {
+      console.error(uploadError);
+      return res.status(500).json({ message: 'Storage 업로드 실패' });
+    }
+
+    // 2. 퍼블릭 URL 생성
+    const { data: urlData } = supabase.storage
+      .from('planner-image')
+      .getPublicUrl(storagePath);
+
+    const image_link = urlData.publicUrl;
+
+    // 3. DB 테이블 삽입
+    const { error: insertError } = await supabase
+      .from('image')
+      .insert([{ student_id, image_link, text, total_time: Number(total_time) }]);
+
+    if (insertError) {
+      console.error(insertError);
+      return res.status(500).json({ message: 'DB 저장 실패' });
+    }
+
+    // 4. 임시 파일 제거
+    fs.unlinkSync(file.path);
+
+    return res.json({ message: '업로드 성공!' });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: '서버 오류' });
+  }
+});
 app.get('/explore', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'explore.html'))
 })

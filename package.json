@@ -2,6 +2,8 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.52.0",
     "dotenv": "^17.2.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "fs": "^0.0.1-security",
+    "multer": "^2.0.2"
   }
 }

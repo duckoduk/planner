@@ -47,6 +47,8 @@ button.addEventListener('click', async () => {
         const data = await response.json()
         if (response.ok) {
             if (data.success) {
+                localStorage.setItem('student_id', number);  // 학번 저장
+                localStorage.setItem('user_id', data.userId); // 사용자 ID 저장
                 window.location.replace('/explore')
             } else {
                 err2.innerText = data.message || '로그인에 실패했습니다.'

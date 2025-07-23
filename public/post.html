@@ -186,6 +186,41 @@
         reader.readAsDataURL(file);// 파일을 Data URL로 읽음
       }
     });
+  //post
+ document.querySelector('.post-btn').addEventListener('click', async () => {
+  const fileInput = document.querySelector('input[type="file"]');
+  const file = fileInput.files[0];
+  const student_id = localStorage.getItem('student_id'); 
+  const text = document.querySelector('textarea').value;
+
+  const timeInputs = document.querySelectorAll('.time-num');
+  const hours = parseInt(timeInputs[0].value) || 0;
+  const minutes = parseInt(timeInputs[1].value) || 0;
+  const seconds = parseInt(timeInputs[2].value) || 0;
+  const total_time = hours * 3600 + minutes * 60 + seconds;
+  console.log('학번:', student_id, '내용:', text, '총 시간:', total_time);
+
+  if (!file || !text || !student_id) {
+    console.log(file, text, student_id);
+    alert('모든 항목을 입력해주세요!');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('image', file);
+  formData.append('student_id', student_id); 
+  formData.append('text', text);
+  formData.append('total_time', total_time);
+  console.log(' debug check');
+  const response = await fetch('/upload-image', {
+    method: 'POST',
+    body: formData,
+  });
+  console.log('response:', response);
+  const result = await response.json();
+  console.log(result);
+  alert(result.message);
+});
 
     
   </script>
