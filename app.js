@@ -41,7 +41,7 @@ app.post('/login', async (req, res) => { // 함수를 async로 변경
         if (isPasswordCorrect) {
             // -> 로그인 성공
             // 세션/토큰 로직.
-            return res.json({ success: true, message: '로그인 성공!', userId: data.id });
+            return res.json({ success: true, message: '로그인 성공!', userId: data.id, username: data.username , studentId: data.student_id });
         } else {
             // 비밀번호가 틀릴 경우
             return res.status(401).json({ success: false, message: '비밀번호가 일치하지 않습니다.' });

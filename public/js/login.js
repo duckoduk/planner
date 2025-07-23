@@ -7,7 +7,7 @@ const err2 = document.getElementById('error2')
 button.addEventListener('click', async () => {
     let number = num.value
     let password = pass.value
-    
+
     err1.style.display = 'none'
     err2.style.display = 'none'
     let isError = false
@@ -33,7 +33,7 @@ button.addEventListener('click', async () => {
         err2.innerText = "비밀번호를 입력해주세요."
         err2.style.display = 'block'
     }
-    
+
     if (isError) return
 
     // 대충 로그인 요청
@@ -47,8 +47,9 @@ button.addEventListener('click', async () => {
         const data = await response.json()
         if (response.ok) {
             if (data.success) {
-                localStorage.setItem('student_id', number);  // 학번 저장
-                localStorage.setItem('user_id', data.userId); // 사용자 ID 저장
+                localStorage.setItem('student_id', number);         // 학번 저장
+                localStorage.setItem('user_id', data.userId);       // 사용자 고유 ID 저장
+                localStorage.setItem('username', data.username);    // username 저장
                 window.location.replace('/explore')
             } else {
                 err2.innerText = data.message || '로그인에 실패했습니다.'
