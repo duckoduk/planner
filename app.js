@@ -86,16 +86,13 @@ const storage = multer.diskStorage({
   destination: 'uploads/',
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);
-    const student_id = req.body.student_id; // 클라이언트에서 전송된 학번
-    const timestamp = Date.now();
-    const filename = `${student_id}_${timestamp}${ext}`;
-    cb(null, filename);
+    const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${ext}`;
+    cb(null, uniqueName);
   },
 });
+const upload = multer({ storage });
 
-const upload = multer({ storage });// multer 설정
-
-app.post('/upload-image', upload.single('image'), async (req, res) => { // 이미지 업로드 엔드포인트
+app.post('/upload-image', upload.single('image'), async (req, res) => {
   try {
     const { student_id, text, total_time } = req.body;
     const file = req.file;
