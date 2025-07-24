@@ -309,8 +309,30 @@ app.get('/leaderboard/:classId', isAuthenticated, async (req, res) => {
   const classNum = t[1]
   if (classNum.length === 1) classNum = '0' + classNum
   const cId = grade + classNum
+  // class_id가 cId인 데이터 가져오기
+  const { imageData, error } = await supabase //이건 image테이블
+    .from('image')
+    .select('student_id, image_link, text, total_time') //<-- 필요한 데이터만 골라 써
+    .eq('class_id', cId)
+    .limit(10) // 상위 10개만 가져오기 <-- 얼마나 필요한지 몰라서 그냥 씀
+  if (error) {
+    console.error('랭킹 데이터 조회 실패:', error);
+  }
+  const { userData, userError } = await supabase //이건 user_data테이블
+    .from('user_data')
+    .select('student_id, total_count, total_time')
+    .order('total_count', { ascending: false }) // total_count 기준으로 내림차순 정렬(랭킹 정렬임)
+    .eq('class_id', cId)
+    .limit(10) // 상위 10개만 가져오기
+  if (userError) {
+    console.error('유저 데이터 조회 실패:', userError);
+    return res.status(500).json({ success: false, message: '서버 오류' });
+  }
+  console.log(imageData, userData);
+  return res.render('leaderboard', { image: imageData, rank: userData, classId: cId });
   // image에서 created_at이 오늘이고 class_id가 cId인 것들 다 가져옴
   // 아몰라 머리 안돌아감 걍 저기 뭐냐 피그마 보고 필요할거같은거 가져와줘
+
 })
 
 // login.html
