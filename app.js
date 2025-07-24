@@ -21,6 +21,10 @@ const pgPool = new pg.Pool({
 // static 폴더로 지정
 app.use(express.static(path.join(__dirname, 'public')))
 
+// ejs 관련
+app.set('view engine', 'ejs') // ejs 템플릿 엔진 사용
+app.set('views', path.join(__dirname, 'views')) // views 폴더 지정
+
 // json 데이터 req.body로 접근 가능하게 함
 app.use(express.json())
 
@@ -103,7 +107,7 @@ app.post('/login', async (req, res) => {
     }
 })
 
-//회원가입
+// 회원가입
 app.post('/register', async (req, res) => {
     const { number, id, password } = req.body;
 
@@ -301,9 +305,20 @@ app.post('/logout', (req, res) => {
     });
 });
 
-app.set('view engine', 'ejs') // ejs 템플릿 엔진 사용
-app.set('views', path.join(__dirname, 'views')) // views 폴더 지정
-
+// 정보 요청(프론트에서 현재 사용자 정보 불러올 때 사용)
+app.get('/user/me', isAuthenticated, (req, res) => {
+    // req.session에 저장된 정보 활용
+    if (req.session.userId) {
+        return res.json({
+            success: true,
+            userId: req.session.userId,
+            username: req.session.username,
+            studentId: req.session.studentId
+        });
+    } else {
+        return res.status(401).json({ message: '로그인 정보가 없습니다.' });
+    }
+});
 
 // server open
 app.listen(port, () => {

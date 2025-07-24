@@ -8,22 +8,23 @@
 </head>
 <body>
   <div class="container">
-    <h2>Sign up</h2>
-<p class="description">Create an account to get started</p>
+    <h2>회원가입</h2>
+<p class="description">Plog를 이용하기 위한 계정 생성하기</p>
 
 <label class="input-label">학번</label>
 <input type="number" id ="num" placeholder="학번">
 
 <label class="input-label">ID</label>
-<input type="text" id="id" placeholder="ID">
+<input type="text" id="id" placeholder="ID(자유 형식)">
 
 <label class="input-label">비밀번호</label>
-<input type="password" id="password" placeholder="Create a password">
-<input type="password" id="confirm-password" placeholder="Confirm password">
+<input type="text" id="password" placeholder="비밀번호">
+<input type="text" id="confirm-password" placeholder="비밀번호 확인">
 
 <p id="error-message" style="color: red; display: none; align-self: flex-start; width: 100%; text-align: left; margin-top: -10px; margin-bottom: 10px; font-size: 14px;"></p>
-    <label class="checkbox-label"><input type="checkbox" id="terms"> I've read and agree with the <a href="#">Terms and Conditions </a> and the  <a href="#">Privacy Policy.</a></label>
-    <button class="btn">Register</button>
+    <label class="checkbox-label"><input type="checkbox" id="terms"> 본인의 학번이 맞으며, 부정한 행위를 저지르지 않을 것입니다.</label>
+    <button class="btn">회원가입하기</button>
+    <p class="description">본인의 학번이 이미 사용 중이라면, <a target="_blank" href="https://www.instagram.com/ujhs_semicolon/">세미콜론 공식 인스타</a>로 문의하세요.</p>
   </div>
   <script src="js/register.js"></script>
 </body>
@@ -87,6 +88,12 @@ label.input-label {
   font-weight: bold;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 input[type="text"] {
   background-image: none;
   width: 100%;
@@ -99,20 +106,6 @@ input[type="text"] {
 }
 input[type="number"] {
   background-image: none;
-  width: 100%;
-  font-size: 1rem;
-  padding: 1.125rem 0.875rem;
-  margin-bottom: 1.125rem;
-  border-radius: 0.75rem;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
-input[type="password"] {
-  background-image: url('images/eye_icon.png');
-  background-repeat: no-repeat;
-  background-position: right 0.875rem center;
-  background-size: 1.25rem 1.25rem;
   width: 100%;
   font-size: 1rem;
   padding: 1.125rem 0.875rem;

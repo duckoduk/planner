@@ -14,11 +14,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const id = idInput.value;
         const password = passInput.value;
         const confirmPassword = confirmPassInput.value;
-        console.log(`학번: ${number}, ID: ${id}, 비밀번호: ${password}, 비밀번호 확인: ${confirmPassword}`);
         
         if (!number || !id || !password || !confirmPassword) {
-            errorMessage.textContent = '모든 필드를 입력해주세요.';
+            errorMessage.textContent = '모든 입력란을 채워주세요.';
             errorMessage.style.display = 'block';
+            return;
+        }
+
+        const idString = String(number)
+        const grade = parseInt(idString.charAt(0), 10);
+        const classNum = parseInt(idString.substring(1, 3), 10);
+        let numberError = false
+        if (idString.length !== 5) numberError = true
+        else if (grade < 1 || grade > 3) numberError = true
+        else if ((grade === 1 || grade === 2) && (classNum > 12 || classNum < 1)) numberError = true
+        else if ((grade === 3) && (classNum > 14 || classNum < 1)) numberError = true
+        
+        if (numberError) {
+            errorMessage.textContent = '유효하지 않은 학번입니다.'
+            errorMessage.style.display = 'block'
+            return;
+        }
+
+        if (id.length > 10) {
+            errorMessage.textContent = 'ID는 10자 이내여야 합니다.'
+            errorMessage.style.display = 'block'
             return;
         }
 
@@ -29,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (!termsCheckbox.checked) {
-            errorMessage.textContent = '이용약관 및 개인정보 처리방침에 동의해주세요.';
+            errorMessage.textContent = '동의 사항에 체크해주세요.';
             errorMessage.style.display = 'block';
             return;
         }

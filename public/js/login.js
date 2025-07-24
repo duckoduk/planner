@@ -12,21 +12,13 @@ button.addEventListener('click', async () => {
     err2.style.display = 'none'
     let isError = false
 
-    // 대략적인 에러
-    // 추후 보완 필요
-
     // 학번
     if (!number) {
         isError = true
         err1.innerText = "학번을 입력해주세요."
         err1.style.display = 'block'
-    } else if (number < 10101 || number > 21240) {
-        isError = true
-        num.value = ''
-        err1.innerText = "유효하지 않은 학번입니다."
-        err1.style.display = 'block'
     }
-
+    
     // 비번
     if (!password) {
         isError = true
@@ -47,9 +39,6 @@ button.addEventListener('click', async () => {
         const data = await response.json()
         if (response.ok) {
             if (data.success) {
-                localStorage.setItem('student_id', number);         // 학번 저장
-                localStorage.setItem('user_id', data.userId);       // 사용자 고유 ID 저장
-                localStorage.setItem('username', data.username);    // username 저장
                 window.location.replace('/explore')
             } else {
                 err2.innerText = data.message || '로그인에 실패했습니다.'
