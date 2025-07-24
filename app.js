@@ -355,6 +355,30 @@ app.get('/profile-data', isAuthenticated, async (req, res) => {
     res.json({ success: true, images: data });
 });
 
+app.get('/rank-data', isAuthenticated, async (req, res) => {
+    const { data, error } = await supabase
+        .from('class_data')
+        .select('class_id, total_time, total_count')
+        .order('total_count', { ascending: false })
+
+    if (error) {
+        console.error('랭크 데이터 조회 실패:', error);
+        return res.status(500).json({ success: false, message: '서버 오류' });
+    }
+    const rankings = data.map(item => ({
+            class_id: item.class_id,
+            total_time: item.total_time,
+            total_count: item.total_count
+        }));
+    res.json({ success: true, rankings });
+});
+
+//rank.ejs 라우팅
+app.get('/rank', isAuthenticated, (req, res) => {
+    res.render('rank', { }); 
+});
+
+
 // server open
 app.listen(port, () => {
 	console.log(`${port}(으)로 서버가 열렸습니다.`)

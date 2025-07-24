@@ -11,7 +11,6 @@
     console.log('학번:', student_id, '이름:', username);
 
     async function loadProfileData() {
-    console.log('프로필 데이터 로드 중...');
     const res = await fetch('/profile-data');
     const result = await res.json();
     console.log('프로필 데이터:', result);
