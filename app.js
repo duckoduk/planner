@@ -303,6 +303,16 @@ app.get('/explore', isAuthenticated, async (req, res) => {
     res.render('explore', {classes: changedData})
 })
 
+app.get('/leaderboard/:classId', isAuthenticated, async (req, res) => {
+  const t = req.params.classId.split('-')
+  const grade = t[0]
+  const classNum = t[1]
+  if (classNum.length === 1) classNum = '0' + classNum
+  const cId = grade + classNum
+  // image에서 created_at이 오늘이고 class_id가 cId인 것들 다 가져옴
+  // 아몰라 머리 안돌아감 걍 저기 뭐냐 피그마 보고 필요할거같은거 가져와줘
+})
+
 // login.html
 app.get('/', (req, res) => {
 	res.sendFile(path.join(__dirname, 'public', 'login.html'))
