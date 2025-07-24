@@ -5,30 +5,70 @@ const port = 5000
 const multer = require('multer');// 파일 업로드를 위한 multer 모듈 가져오기
 const fs = require('fs');// 파일 시스템 모듈 가져오기
 
+// 세션 기반 인증
+const bcrypt = require('bcryptjs')
+const session = require('express-session')
+const pg = require('pg');
+const pgSession = require('connect-pg-simple')(session);
+
 require('dotenv').config(); // env 가져오기
-const supabase = require('./supabaseClient');
+const supabase = require('./supabaseClient'); // supbase 가져오기
+
+const pgPool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
 // static 폴더로 지정
 app.use(express.static(path.join(__dirname, 'public')))
 
 // json 데이터 req.body로 접근 가능하게 함
 app.use(express.json())
-//로그인
-app.post('/login', async (req, res) => { // 함수를 async로 변경
+
+// express-session 미들웨어 설정 (PostgreSQL 세션 저장소 사용)
+app.use(session({
+    store: new pgSession({
+        pool: pgPool, // 연결 풀 사용
+        tableName: 'session',
+        createTableIfMissing: false,
+    }),
+    secret: process.env.SESSION_SECRET, // 세션 ID를 서명하는 비밀 키
+    resave: false, // 세션이 변경되지 않아도 다시 저장할지 여부
+    saveUninitialized: false, // 초기화되지 않은 세션을 저장할지 여부
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 일주일 (세션 유지 시간)
+        httpOnly: true, // JavaScript에서 쿠키 접근 불가
+        secure: process.env.NODE_ENV === 'production', // HTTPS 환경에서만 쿠키 전송
+        sameSite: 'Lax', // CSRF 보호
+    }
+}));
+
+// 세션 기반 인증 미들웨어
+const isAuthenticated = (req, res, next) => {
+    // 세션에 userId가 있는지 확인하여 로그인 여부 판단
+    if (req.session && req.session.userId) {
+        next(); // 로그인되어 있으면 다음 미들웨어 또는 라우트로 이동
+    } else {
+        // 로그인되어 있지 않으면 401 Unauthorized 응답
+        res.status(401).json({ message: '로그인이 필요합니다.' });
+    }
+};
+
+// 로그인
+app.post('/login', async (req, res) => {
     const { number, password } = req.body
  
-    // 예시: Supabase의 'users' 테이블에서 사용자 정보 가져오기
+    // Supabase의 'users' 테이블에서 사용자 정보 가져오기
     try {
-        const { data, error } = await supabase
+        const { data: user, error: userError } = await supabase
             .from('users') // 'users' 테이블 지정 (로그인 데이터 디비임)
             .select('*')
             .eq('student_id', number) // 'number'에 학번(student_id)값 할당
             .single(); // 한 개의 행만 ok. 없거나 여러 개 -> 에러
  
-        if (error) {// error! error! 위이이이이이이이이잉 웨에에에ㅔ에에에에에엥
-            console.error(error);
+        if (userError) {// error! error! 위이이이이이이이이잉 웨에에에ㅔ에에에에에엥
+            console.error(userError);
             // 사용자X-> .single()이 'PGRST116' 코드를 포함한 에러를 반환.
-            if (error.code === 'PGRST116') {
+            if (userError.code === 'PGRST116') {
                 return res.status(404).json({ success: false, message: '사용자가 존재하지 않습니다.' });
             }
             return res.status(500).json({ success: false, message: '서버 오류가 발생했습니다.' });
@@ -37,13 +77,21 @@ app.post('/login', async (req, res) => { // 함수를 async로 변경
         // 1. 사용자가 존재할 경우 (data가 null이 아님)
         // 비밀번호를 확인->  bcrypt 사용
         // const isPasswordCorrect = await bcrypt.compare(password, data.password_hash);
-        const isPasswordCorrect = (password === data.password); // 일단 bycrypt 빼놈. 나중에 활성화만 시키면 대!
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
  
         // 2. 비밀번호가 맞을 경우
         if (isPasswordCorrect) {
             // -> 로그인 성공
-            // 세션/토큰 로직.
-            return res.json({ success: true, message: '로그인 성공!', userId: data.id, username: data.username , studentId: data.student_id });
+            req.session.userId = user.id;
+            req.session.username = user.username;
+            req.session.studentId = user.student_id;
+            return res.json({
+              success: true,
+              message: '로그인 성공!',
+              userId: user.id,
+              username: user.username,
+              studentId: user.student_id
+            });
         } else {
             // 비밀번호가 틀릴 경우
             return res.status(401).json({ success: false, message: '비밀번호가 일치하지 않습니다.' });
@@ -60,10 +108,13 @@ app.post('/register', async (req, res) => {
     const { number, id, password } = req.body;
 
     try {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+      
         // 회원가입 로직
         const { data, error } = await supabase
             .from('users')
-            .insert([{ student_id: number, username: id, password: password }]) // supabase 저장 해싱 나중에 하겟음.
+            .insert([{ student_id: number, username: id, password: hashedPassword }]) // 해시된 비밀번호 저장
             .select()
             .single();
 
@@ -94,10 +145,13 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-app.post('/upload-image', upload.single('image'), async (req, res) => {
+// 이미지 업로드 요청
+app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, res) => {
   try {
-    const { student_id, text, total_time } = req.body;
+    student_id = req.session.studentId;
+    const {text, total_time} = req.body;
     const file = req.file;
+    
     // 파일명 변경
     const ext = path.extname(file.originalname);
     const newFileName = `${student_id}-${Date.now()}${ext}`;
@@ -134,6 +188,7 @@ app.post('/upload-image', upload.single('image'), async (req, res) => {
 
     if (insertError) {
       console.error(insertError);
+      if (fs.existsSync(newFilePath)) fs.unlinkSync(newFilePath); // 실패시 파일 삭제
       return res.status(500).json({ message: 'DB 저장 실패' });
     }
 
@@ -143,11 +198,20 @@ app.post('/upload-image', upload.single('image'), async (req, res) => {
     return res.json({ message: '업로드 성공!' });
 
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: '서버 오류' });
-  }
+        console.error('이미지 업로드 중 서버 오류:', err);
+        // 예외 발생 시 rename된 파일이 있을 경우 삭제 시도
+        // newFilePath 변수가 정의되어 있고, 해당 경로에 파일이 실제로 존재하는지 확인
+        if (typeof newFilePath !== 'undefined' && fs.existsSync(newFilePath)) {
+            try {
+                fs.unlinkSync(newFilePath);
+            } catch (unlinkErr) {
+                console.error('임시 파일 삭제 실패 (catch 블록):', unlinkErr);
+            }
+        }
+        return res.status(500).json({ message: '서버 오류' });
+    }
 });
-app.get('/explore', (req, res) => {
+app.get('/explore', isAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'explore.html'))
 })
 
@@ -156,6 +220,19 @@ app.get('/', (req, res) => {
 	res.sendFile(path.join(__dirname, 'public', 'login.html'))
 })
 
+// 로그아웃
+app.post('/logout', (req, res) => {
+    // 세션 파괴 (로그아웃)
+    req.session.destroy(err => {
+        if (err) {
+            console.error('세션 파괴 실패:', err);
+            return res.status(500).json({ success: false, message: '로그아웃 실패' });
+        }
+        // 클라이언트에게 성공 응답
+        res.clearCookie('connect.sid'); // express-session 기본 쿠키 이름
+        res.json({ success: true, message: '로그아웃 성공!' });
+    });
+});
 
 // server open
 app.listen(port, () => {
