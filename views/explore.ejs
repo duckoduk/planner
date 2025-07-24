@@ -36,9 +36,9 @@
 <body>
   <div class="container">
     <h2 style="padding-top: 2rem;">Planner View</h2>
-    <div class="search-bar">
+    <!-- <div class="search-bar">
       <img src="images/explore/search.png" alt="search icon">
-      <input type="text" placeholder="1-7">
+      <input type="text" placeholder="예: 2-7">
     </div>
     <div class="controls" style="padding-bottom: 1rem;">
       <button id="sortBtn"><img src="images/explore/sort.png" alt="Sort icon">Sort</button>
@@ -53,22 +53,15 @@
         <div class="popup-item">2학년</div>
         <div class="popup-item">3학년</div>
       </div>
-    </div>
+    </div> -->
     <div class="grid">
-      <div class="card"><img class="heart" src="images/explore/heart.png" alt="heart"><div class="label">1-7</div><div class="sub">30장</div></div>
-      <div class="card"><img class="heart" src="images/explore/heart.png" alt="heart"><div class="label">1-6</div><div class="sub">29장</div></div>
-      <div class="card"><img class="heart" src="images/explore/heart.png" alt="heart"><div class="label">1-5</div><div class="sub">28장</div></div>
-      <div class="card"><img class="heart" src="images/explore/heart.png" alt="heart"><div class="label">1-4</div><div class="sub">27장</div></div>
-      <div class="card"><img class="heart" src="images/explore/heart.png" alt="heart"><div class="label">1-3</div><div class="sub">26장</div></div>
-      <div class="card"><img class="heart" src="images/explore/heart.png" alt="heart"><div class="label">1-2</div><div class="sub">25장</div></div>
-      <div class="card"><img class="heart" src="images/explore/heart.png" alt="heart"><div class="label">1-1</div><div class="sub">24장</div></div>
-      <div class="card"><img class="heart" src="images/explore/heart.png" alt="heart"><div class="label">2-1</div><div class="sub">23장</div></div>
-      <div class="card"><img class="heart" src="images/explore/heart.png" alt="heart"><div class="label">2-2</div><div class="sub">22장</div></div>
-      <div class="card"><img class="heart" src="images/explore/heart.png" alt="heart"><div class="label">2-3</div><div class="sub">21장</div></div>
+      <% classes.forEach((data) => { %>
+      <div class="card"><img class="heart" src="images/explore/heart.png" alt="heart"><div class="label"><%= data.class_id %></div><div class="sub"><%= data.total_count %>장</div></div>
+      <% }) %>
     </div>
   </div>
   <iframe class="bottom-nav" src="bottom_nav.html"></iframe>
-  <script>
+  <!-- <script>
     const sortBtn = document.getElementById('sortBtn'), sortPopup = document.getElementById('sortPopup');
     const filterBtn = document.getElementById('filterBtn'), filterPopup = document.getElementById('filterPopup');
     sortBtn.addEventListener('click', e => { e.stopPropagation(); sortPopup.style.display = sortPopup.style.display==='block'?'none':'block'; filterPopup.style.display='none'; });
@@ -76,6 +69,6 @@
     document.addEventListener('click', () => { sortPopup.style.display='none'; filterPopup.style.display='none'; });
     sortPopup.addEventListener('click', e=>e.stopPropagation());
     filterPopup.addEventListener('click', e=>e.stopPropagation());
-  </script>
+  </script> -->
 </body>
 </html>

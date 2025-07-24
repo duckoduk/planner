@@ -282,8 +282,25 @@ if (classData) {
         return res.status(500).json({ message: '서버 오류' });
     }
 });
-app.get('/explore', isAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'explore.html'))
+
+app.get('/explore', isAuthenticated, async (req, res) => {
+    const { data, error } = await supabase
+      .from('class_data')
+      .select('*')
+      .order('class_id', { ascending: true })
+    
+    if (error) {
+      console.error('data 로드 에러 발생')
+      return res.status(500).send('데이터 불러오기 중 오류 발생')
+    }
+    const changedData = data.map(row => {
+      let classId = String(row.class_id)
+      return {
+        class_id: `${classId.charAt(0)}-${parseInt(classId.substring(1, 3))}`,
+        total_count: row.total_count
+      }
+    })
+    res.render('explore', {classes: changedData})
 })
 
 // login.html
