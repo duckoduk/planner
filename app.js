@@ -191,6 +191,73 @@ app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, r
       if (fs.existsSync(newFilePath)) fs.unlinkSync(newFilePath); // 실패시 파일 삭제
       return res.status(500).json({ message: 'DB 저장 실패' });
     }
+    const classId = String(student_id).slice(0, 3);
+
+// class_data 테이블에서 해당 class_id 조회
+const { data: classData, error: selectError } = await supabase
+  .from('class_data')
+  .select('total_count')
+  .eq('class_id', classId)
+  .single();
+
+if (selectError && selectError.code !== 'PGRST116') {
+  // 다른 에러일 경우 로그
+  console.error('조회 중 오류:', selectError);
+}
+
+if (classData) {
+  const newCount = classData.total_count + 1;
+
+  const { error: updateError } = await supabase
+    .from('class_data')
+    .update({ total_count: newCount })
+    .eq('class_id', classId);
+
+  if (updateError) {
+    console.error('업데이트 실패:', updateError);
+  }
+} else {
+  // 해당 class_id가 없으면 새로 추가
+  const { error: insertError } = await supabase
+    .from('class_data')
+    .insert([{ class_id: classId, total_count: 1 }]);
+
+  if (insertError) {
+    console.error('삽입 실패:', insertError);
+  }
+}
+
+
+    // user_data 테이블 데이터 변경
+    const { data: userData, error: userSelectError } = await supabase
+    .from('user_data')
+    .select('total_count')
+    .eq('student_id', student_id)
+    .single();
+
+    if (userData) {
+    // 이미 존재하면 total_count +1로 업데이트
+    const newUserCount = userData.total_count + 1;
+
+    const { error: userUpdateError } = await supabase
+        .from('user_data')
+        .update({ total_count: newUserCount })
+        .eq('student_id', student_id);
+
+    if (userUpdateError) {
+        console.error('user_data 업데이트 실패:', userUpdateError);
+    }
+    } else {
+    // 존재하지 않으면 새로 insert
+    const { error: insertError } = await supabase
+        .from('user_data')
+        .insert([{ student_id, total_count: 1 }]);
+
+    if (insertError) {
+        console.error('user_data 행 생성 실패:', insertError);
+    }
+    }
+
 
     // 4. 임시 파일 제거
     fs.unlinkSync(newFilePath);
@@ -233,6 +300,10 @@ app.post('/logout', (req, res) => {
         res.json({ success: true, message: '로그아웃 성공!' });
     });
 });
+
+app.set('view engine', 'ejs') // ejs 템플릿 엔진 사용
+app.set('views', path.join(__dirname, 'views')) // views 폴더 지정
+
 
 // server open
 app.listen(port, () => {
