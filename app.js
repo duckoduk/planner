@@ -320,6 +320,24 @@ app.get('/user/me', isAuthenticated, (req, res) => {
     }
 });
 
+// 프로필 페이지
+app.get('/profile-data', isAuthenticated, async (req, res) => {
+
+    const student_id = req.session.studentId;
+
+    const { data, error } = await supabase
+        .from('image')
+        .select('*')
+        .eq('student_id', student_id);
+
+    if (error) {
+        console.error('이미지 조회 실패:', error);
+        return res.status(500).json({ success: false, message: '서버 오류' });
+    }
+
+    res.json({ success: true, images: data });
+});
+
 // server open
 app.listen(port, () => {
 	console.log(`${port}(으)로 서버가 열렸습니다.`)

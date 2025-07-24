@@ -66,6 +66,7 @@
     }
     @media screen and (max-width: 480px) { :root { font-size: 4vw; } }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
   <div class="container">
@@ -84,124 +85,10 @@
     <!-- 이벤트 목록 -->
     <div class="events-title" style="font-weight: 700; color: black;">Your events</div>
     <div class="events-list">
-      <!-- 예시: 2025.07.01 ~ 2025.07.20 까지 20개 -->
-      <div class="event-item">
-        <img class="event-thumb" src="images/blank_image.png" alt="이벤트 이미지">
-        <div class="event-info">
-          <div class="event-date">2025.07.01</div>
-          <div class="event-actions">
-            <img src="images/post_leaderboard/edit_icon.png" alt="수정">
-            <img src="images/post_leaderboard/trash_icon.png" alt="삭제">
-          </div>
-        </div>
-      </div>
-      <!-- ...이하 날짜만 바꿔서 20개 반복... -->
-      <div class="event-item">
-        <img class="event-thumb" src="images/blank_image.png" alt="이벤트 이미지">
-        <div class="event-info">
-          <div class="event-date">2025.07.01</div>
-          <div class="event-actions">
-            <img src="images/post_leaderboard/edit_icon.png" alt="수정">
-            <img src="images/post_leaderboard/trash_icon.png" alt="삭제">
-          </div>
-        </div>
-      </div>
-      <div class="event-item">
-        <img class="event-thumb" src="images/blank_image.png" alt="이벤트 이미지">
-        <div class="event-info">
-          <div class="event-date">2025.07.01</div>
-          <div class="event-actions">
-            <img src="images/post_leaderboard/edit_icon.png" alt="수정">
-            <img src="images/post_leaderboard/trash_icon.png" alt="삭제">
-          </div>
-        </div>
-      </div>
-      <div class="event-item">
-        <img class="event-thumb" src="images/blank_image.png" alt="이벤트 이미지">
-        <div class="event-info">
-          <div class="event-date">2025.07.01</div>
-          <div class="event-actions">
-            <img src="images/post_leaderboard/edit_icon.png" alt="수정">
-            <img src="images/post_leaderboard/trash_icon.png" alt="삭제">
-          </div>
-        </div>
-      </div>
-      <div class="event-item">
-        <img class="event-thumb" src="images/blank_image.png" alt="이벤트 이미지">
-        <div class="event-info">
-          <div class="event-date">2025.07.01</div>
-          <div class="event-actions">
-            <img src="images/post_leaderboard/edit_icon.png" alt="수정">
-            <img src="images/post_leaderboard/trash_icon.png" alt="삭제">
-          </div>
-        </div>
-      </div>
-      <div class="event-item">
-        <img class="event-thumb" src="images/blank_image.png" alt="이벤트 이미지">
-        <div class="event-info">
-          <div class="event-date">2025.07.01</div>
-          <div class="event-actions">
-            <img src="images/post_leaderboard/edit_icon.png" alt="수정">
-            <img src="images/post_leaderboard/trash_icon.png" alt="삭제">
-          </div>
-        </div>
-      </div>
-      <div class="event-item">
-        <img class="event-thumb" src="images/blank_image.png" alt="이벤트 이미지">
-        <div class="event-info">
-          <div class="event-date">2025.07.01</div>
-          <div class="event-actions">
-            <img src="images/post_leaderboard/edit_icon.png" alt="수정">
-            <img src="images/post_leaderboard/trash_icon.png" alt="삭제">
-          </div>
-        </div>
-      </div>
-      <div class="event-item">
-        <img class="event-thumb" src="images/blank_image.png" alt="이벤트 이미지">
-        <div class="event-info">
-          <div class="event-date">2025.07.01</div>
-          <div class="event-actions">
-            <img src="images/post_leaderboard/edit_icon.png" alt="수정">
-            <img src="images/post_leaderboard/trash_icon.png" alt="삭제">
-          </div>
-        </div>
-      </div>
-      <div class="event-item">
-        <img class="event-thumb" src="images/blank_image.png" alt="이벤트 이미지">
-        <div class="event-info">
-          <div class="event-date">2025.07.01</div>
-          <div class="event-actions">
-            <img src="images/post_leaderboard/edit_icon.png" alt="수정">
-            <img src="images/post_leaderboard/trash_icon.png" alt="삭제">
-          </div>
-        </div>
-      </div>
-      <div class="event-item">
-        <img class="event-thumb" src="images/blank_image.png" alt="이벤트 이미지">
-        <div class="event-info">
-          <div class="event-date">2025.07.01</div>
-          <div class="event-actions">
-            <img src="images/post_leaderboard/edit_icon.png" alt="수정">
-            <img src="images/post_leaderboard/trash_icon.png" alt="삭제">
-          </div>
-        </div>
-      </div>
-      
-
+      <!-- Supabase에서 불러온 데이터가 여기에 동적으로 추가됩니다. -->
     </div>
   </div>
-  <script>
-    //로컬에서 학번 가져오기
-    const student_id = localStorage.getItem('student_id');
-    const username = localStorage.getItem('username');
-    const student_class = student_id ? `${student_id[0]}-${parseInt(student_id.slice(1, 3))}` : '학번 없음';
-    console.log(student_class);
-    // 페이지 로드 시 학번과 이름을 표시
-    document.getElementById('student-id').textContent = student_id || '학번 없음';
-    document.getElementById('username').textContent = username || '이름 없음'; 
-    document.getElementById('student-class').textContent = student_class;
-    console.log('학번:', student_id, '이름:', username);
-  </script>
+  <script src="js/profile.js"></script>
   <!-- 바텀 내비게이션 -->
   <iframe class="bottom-nav" src="bottom_nav.html"></iframe>
 </body>
