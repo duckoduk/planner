@@ -40,13 +40,15 @@
     justify-content: center;
     text-decoration: none;
   }
-  .nav-item img {
-  width: 1.5rem;      /* 24px */
-  height: 1.875rem;   /* 30px */
-  margin-bottom: 0.25rem; /* 4px */
+ .nav-item img {
+  width: 2rem; /* 너비 고정 */
+  aspect-ratio: 1 / 1; /* 정사각형 비율 유지 */
+  object-fit: contain; /* 이미지 비율 맞게 내부에 맞춤 */
+  margin-bottom: 0.25rem;
   opacity: 0.6;
   transition: opacity 0.2s;
 }
+
   .nav-item span {
     font-size: 0.75rem;
     color: #666;
