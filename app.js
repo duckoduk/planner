@@ -54,7 +54,7 @@ const isAuthenticated = (req, res, next) => {
         next(); // 로그인되어 있으면 다음 미들웨어 또는 라우트로 이동
     } else {
         // 로그인되어 있지 않으면 401 Unauthorized 응답
-        res.status(401).json({ message: '로그인이 필요합니다.' });
+        res.status(401).json({ message: '로그인이 필요합니다.', 'session': req.session });
     }
 };
 
