@@ -10,5 +10,33 @@
     "fs": "^0.0.1-security",
     "multer": "^2.0.2",
     "pg": "^8.16.3"
-  }
+  },
+  "name": "planner",
+  "version": "1.0.0",
+  "description": "피그마 순서대로\r [피그마 텔포타기](https://www.figma.com/proto/HoYLWet5EQFtKC62eX6oMr/Mobile-Apps-%E2%80%93-Prototyping-Kit--Community-?node-id=1244-564&t=98KSDPor6yd7kVmi-1&scaling=scale-down&content-scaling=fixed&page-id=1203%3A1581 \"피그마로 이동\")\r [노션 텔포타기](https://www.notion.so/23035b9640d880fb938ed850654fd94a \"노션으로 이동\")",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duckoduk/planner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/duckoduk/planner/issues"
+  },
+  "homepage": "https://github.com/duckoduk/planner#readme",
+  
+  "scripts": {
+  "start": "node app.js",
+  "dev": "nodemon app.js"
 }
+
+  
+}
+
+
