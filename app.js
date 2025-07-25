@@ -89,6 +89,7 @@ app.post('/login', async (req, res) => {
             req.session.userId = user.id;
             req.session.username = user.username;
             req.session.studentId = user.student_id;
+            console.log('로그인 성공:', user.username);
             return res.json({
               success: true,
               message: '로그인 성공!',
