@@ -43,7 +43,7 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 7, // 일주일 (세션 유지 시간)
         httpOnly: true, // JavaScript에서 쿠키 접근 불가
         secure: process.env.NODE_ENV === 'production', // HTTPS 환경에서만 쿠키 전송
-        sameSite: 'Lax', // CSRF 보호
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
     }
 }));
 
