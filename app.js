@@ -21,6 +21,7 @@ const pgPool = new pg.Pool({
 // static 폴더로 지정
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.set('trust proxy', 1) // 세션 쿠키를 HTTPS로 설정하기 위해 필요
 // ejs 관련
 app.set('view engine', 'ejs') // ejs 템플릿 엔진 사용
 app.set('views', path.join(__dirname, 'views')) // views 폴더 지정
