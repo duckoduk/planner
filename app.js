@@ -178,6 +178,22 @@ app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, r
     const { text, total_time } = req.body;
     const file = req.file;
 
+    // 중복 체크 //
+    const { data: existingImages, error: checkError } = await supabase
+      .from('image')
+      .select('id')
+      .eq('student_id', student_id)
+      .eq('created_date', nowDate);
+
+    if (checkError) {
+      console.error('중복 확인 실패:', checkError);
+      return res.status(500).json({ message: '중복 확인 중 오류 발생' });
+    }
+
+    if (existingImages && existingImages.length > 0) {
+      return res.status(400).json({ message: '오늘은 이미 게시하셨습니다.' });
+    }
+
     // 파일명 변경
     const ext = path.extname(file.originalname);
     const newFileName = `${student_id}-${Date.now()}${ext}`;
@@ -358,6 +374,9 @@ app.get('/leaderboard/:classId', isAuthenticated, async (req, res) => {
 
 // login.html
 app.get('/', (req, res) => {
+  if (req.session && req.session.userId) {
+    return res.redirect('/post'); // 또는 /profile 등 원하는 경로
+  }
   res.sendFile(path.join(__dirname, 'public', 'login.html'))
 })
 
