@@ -7,71 +7,75 @@
   <link rel="stylesheet" href="/css/rank.css">
 </head>
 <body>
-  <div class="container">
-    <h2 style="margin-top: 3rem;">Leaderboard</h2>
-    <div class="tabs">
-      <button>class</button>
-      <button>individual</button>
-    </div>
-    <div class="rank-wrapper">  
-  <div class="rank-item">
-    <div class="circle">2<sup>nd</sup></div>
-    <div class="label">2‑1</div>
-    <div class="sub-info">
-      <img src="images/rank/note.png" alt="points icon" class="note-icon">
-      40 pts
-    </div>
+ <div class="container">
+  <h2 style="margin-top: 3rem;">Leaderboard</h2>
+  <div class="tabs">
+    <a href="/rank?type=class" class="tab-button <%= type === 'class' ? 'active' : '' %>">class</a>
+    <a href="/rank?type=individual" class="tab-button <%= type === 'individual' ? 'active' : '' %>">individual</a>
   </div>
-  <div class="rank-item">
-    <img src="images/rank/crown.png" class="crown" alt="Crown">
-    <div class="circle" style="margin-top: 0.5rem;">1<sup>st</sup></div>
-    <div class="label">3‑1</div>
-    <div class="sub-info">
-      <img src="images/rank/note.png" alt="points icon" class="note-icon">
-      43 pts
+
+
+
+  <!-- 상위 3위 -->
+  <div class="rank-wrapper">
+  <% if (ranking && ranking.length >= 3) { %>
+    <!-- 2 -->
+    <div class="rank-item">
+      <div class="circle">2<sup>nd</sup></div>
+      <div class="label"><%= ranking[1].class_name %></div>
+      <div class="sub-info">
+        <img src="images/rank/note.png" alt="points icon" class="note-icon">
+        <%= ranking[1].total_points || ranking[1].total_count || 0 %> pts
+      </div>
     </div>
-  </div>
-  <div class="rank-item">
-    <div class="circle">3<sup>rd</sup></div>
-    <div class="label">1‑1</div>
-    <div class="sub-info">
-      <img src="images/rank/note.png" alt="points icon" class="note-icon">
-      38 pts
+
+    <!-- 1 -->
+    <div class="rank-item">
+      <img src="images/rank/crown.png" class="crown" alt="Crown">
+      <div class="circle" style="margin-top: 0.5rem;">1<sup>st</sup></div>
+      <div class="label"><%= ranking[0].class_name %></div>
+      <div class="sub-info">
+        <img src="images/rank/note.png" alt="points icon" class="note-icon">
+        <%= ranking[0].total_points || ranking[0].total_count || 0 %> pts
+      </div>
     </div>
+
+    <!-- 3 -->
+    <div class="rank-item">
+      <div class="circle">3<sup>rd</sup></div>
+      <div class="label"><%= ranking[2].class_name %></div>
+      <div class="sub-info">
+        <img src="images/rank/note.png" alt="points icon" class="note-icon">
+        <%= ranking[2].total_points || ranking[2].total_count || 0 %> pts
+      </div>
+    </div>
+  <% } %>
+</div>
+
+
+  <!-- 나머지 -->
+  <div class="list-container">
+    <div class="list-header">
+      <label for="sort">정렬:</label>
+      <select id="sort" name="sort">
+        <option value="submission">제출장순</option>
+      </select>
+    </div>
+    <ul class="rank-list">
+      <% if (ranking && ranking.length > 3) { %>
+        <% ranking.slice(3, 20).forEach((item, index) => { %>
+          <li>
+            <span><%= index + 4 %>. <%= item.class_name %></span>
+            <span><%= item.total_points || item.total_count || 0 %> pts</span>
+          </li>
+        <% }) %>
+      <% } else { %>
+        <li><span>랭킹 데이터가 부족합니다.</span></li>
+      <% } %>
+    </ul>
   </div>
 </div>
 
-    <div class="list-container">
-      <div class="list-header">
-        <label for="sort">정렬:</label>
-        <select id="sort" name="sort">
-          <option value="submission">제출장순</option>
-        </select>
-      </div>
-      <ul class="rank-list">
-        <li><span>4. x-x</span><span>36 pts</span></li>
-        <li><span>5. x-x</span><span>35 pts</span></li>
-        <li><span>6. x-x</span><span>34 pts</span></li>
-        <li><span>7. x-x</span><span>33 pts</span></li>
-        <li><span>8. x-x</span><span>32 pts</span></li>
-        <li><span>9. x-x</span><span>31 pts</span></li>
-        <li><span>10. x-x</span><span>30 pts</span></li>
-        <li><span>11. x-x</span><span>29 pts</span></li>
-        <li><span>12. x-x</span><span>28 pts</span></li>
-        <li><span>13. x-x</span><span>27 pts</span></li>
-        <li><span>14. x-x</span><span>26 pts</span></li>
-        <li><span>15. x-x</span><span>25 pts</span></li>
-        <li><span>16. x-x</span><span>24 pts</span></li>
-        <li><span>17. x-x</span><span>23 pts</span></li>
-        <li><span>18. x-x</span><span>22 pts</span></li>
-        <li><span>19. x-x</span><span>21 pts</span></li>
-        <li><span>20. x-x</span><span>20 pts</span></li>
-        <li><span>21. x-x</span><span>19 pts</span></li>
-        <li><span>22. x-x</span><span>18 pts</span></li>
-        <li><span>23. x-x</span><span>17 pts</span></li>
-      </ul>
-    </div>
-  </div>
   <%- include('partials/bottom_nav') %>
   <script src="/js/rank.js"></script>
 </body>

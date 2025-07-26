@@ -10,6 +10,36 @@ body {
     display: flex;
     justify-content: center;
 }
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.tab-button {
+  flex: 1;
+  text-align: center;
+  padding: 0.8rem;
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  font-weight: 400;
+  text-decoration: none;
+  border-radius: 8px;
+  cursor: default; /* 클릭 느낌 없게 */
+}
+
+.tab-button.active {
+  font-weight: 700; /* 선택된 탭만 굵게 */
+}
+
+.tab-button:focus,
+.tab-button:hover {
+  outline: none;
+}
+
 
 .container {
     width: 100%;

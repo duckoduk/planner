@@ -401,21 +401,65 @@ app.get('/rank-data', isAuthenticated, async (req, res) => {
     console.error('랭크 데이터 조회 실패:', error);
     return res.status(500).json({ success: false, message: '서버 오류' });
   }
-  const rankings = data.map(item => ({
-    class_id: item.class_id,
-    total_time: item.total_time,
-    total_count: item.total_count
-  }));
-  res.json({ success: true, rankings });
+
+  res.json({ success: true, ranking: data });
 });
 
 //rank.ejs 라우팅
-app.get('/rank', isAuthenticated, (req, res) => {
-  res.render('rank', {});
+app.get('/rank', isAuthenticated, async (req, res) => {
+  try {
+    // 쿼리에서 type을 받아서 선택 (기본: class)
+    const type = req.query.type === 'individual' ? 'individual' : 'class';
+    const tableName = type === 'individual' ? 'user_data' : 'class_data';
+
+    const { data, error } = await supabase
+      .from(tableName)
+      .select('class_id, total_time, total_count')
+      .order('total_count', { ascending: false })
+      .order('total_time', { ascending: false });
+
+    if (error) {
+      console.error(`${type} 랭킹 조회 실패:`, error);
+      return res.status(500).send('랭킹 데이터를 불러오는 중 오류가 발생했습니다.');
+    }
+
+    const formatTime = (totalSeconds) => {
+      if (!totalSeconds || totalSeconds < 0) return '0초';
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      let result = '';
+      if (hours > 0) result += `${hours}시간 `;
+      if (minutes > 0) result += `${minutes}분 `;
+      if (seconds > 0 || result === '') result += `${seconds}초`;
+      return result.trim();
+    };
+
+    const rankingData = data.map(row => {
+      let classId = String(row.class_id);
+      return {
+        ...row,
+        class_name: `${classId.charAt(0)}-${parseInt(classId.substring(1, 3))}`,
+        total_time_formatted: formatTime(row.total_time)
+      };
+    });
+
+    res.render('rank', {
+      ranking: rankingData,
+      page: 'rank',
+      type,
+      title: type === 'individual' ? '개인 랭킹' : '반별 랭킹'
+    });
+  } catch (err) {
+    console.error('랭킹 페이지 렌더링 오류:', err);
+    res.status(500).send('서버 오류가 발생했습니다.');
+  }
 });
+
 
 
 // server open
 app.listen(port, () => {
   console.log(`${port}(으)로 서버가 열렸습니다.`)
 })
+asdfsd
