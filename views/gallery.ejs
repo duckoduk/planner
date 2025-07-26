@@ -33,7 +33,7 @@
             <img src="<%= image.image_link %>" class="zoomable-image" alt="이미지 없음">
           </div>
           <div class="card-info">
-            <div class="title"><%= image.username %></div>
+            <div class="title"><%= image.student_id %> <%= image.username %></div>
             <div class="time">
               <img src="/images/post/clock_icon.png" alt="시계">
               <%= h %>h <%= m %>m <%= s %>s
@@ -49,5 +49,6 @@
   <%- include('partials/bottom_nav') %>
   <!-- 이미지 확대 -->
   <%- include('partials/image_modal') %>  
+  <script src="/js/image_modal.js"></script>
 </body>
 </html>

@@ -35,8 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        if (id.length > 10) {
-            errorMessage.textContent = 'ID는 10자 이내여야 합니다.'
+        if (id.length > 6) {
+            errorMessage.textContent = 'ID는 6자 이내여야 합니다.'
             errorMessage.style.display = 'block'
             return;
         }
