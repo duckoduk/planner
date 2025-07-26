@@ -4,62 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Explore</title>
-  <style>
-    :root { font-size: 16px; }
-    body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #fff; display: flex; justify-content: center; }
-    .container { width: 100%; max-width: 480px; padding: 1rem; padding-bottom: 6rem; box-sizing: border-box; }
-    h2 { font-size: 1.25rem; font-weight: 600; text-align: center; margin-bottom: 1rem; color: #444; }
-    /* .search-bar { display: flex; align-items: center; background-color: #f0f4fc; border-radius: 2rem; padding: 0.5rem 1rem; margin-bottom: 1rem; }
-    .search-bar img { width: 1rem; height: 1rem; margin-right: 0.75rem; }
-    .search-bar input { border: none; background: transparent; flex: 1; font-size: 1rem; outline: none; }
-    .controls { position: relative; display: flex; justify-content: space-between; margin-bottom: 1rem; }
-    .controls button { width: 30%; display: flex; align-items: center; justify-content: center; padding: 0.5rem; font-size: 0.9rem; border: 1px solid #ccc; border-radius: 0.75rem; background-color: #fff; cursor: pointer; }
-    .controls button img { width: 1rem; height: 1rem; margin-right: 0.5rem; }
-    .popup-menu { display: none; position: absolute; top: calc(100% + 0.25rem); background: #fff; border: 1px solid #ccc; border-radius: 0.5rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1); z-index: 100; min-width: 8rem; }
-    #sortPopup { left: 0; }
-    #filterPopup { right: 0; }
-    .popup-item { padding: 0.5rem 1rem; font-size: 0.9rem; color: #444; cursor: pointer; }
-    .popup-item:hover { background-color: #f0f4fc; } */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-    }
-    .card { background-color: #f7f9fe; border-radius: 1rem; box-sizing: border-box; position: relative; aspect-ratio: 1 / 0.85; display: flex; flex-direction: column; justify-content: center; padding: 0.75rem; }
-    .card .label { font-size: 1rem; font-weight: 600; color: #333; margin-bottom: 0.25rem; align-self: center;}
-    .card .sub { font-size: 1.1rem; font-weight: 700; color: #000000; align-self: center;}
-    iframe.bottom-nav { width: 100%; height: 64px; border: none; position: fixed; bottom: 0; left: 0; z-index: 1000; }
-    @media screen and (max-width: 480px) { :root { font-size: 4vw; } }
-  </style>
+  <link rel="stylesheet" href="/css/explore.css">
 </head>
 <body>
   <div class="container">
     <h2 style="padding-top: 2rem;">반 선택</h2>
-    <!-- <div class="search-bar">
-      <img src="images/explore/search.png" alt="search icon">
-      <input type="text" placeholder="예: 2-7">
-    </div>
-    <div class="controls" style="padding-bottom: 1rem;">
-      <button id="sortBtn"><img src="images/explore/sort.png" alt="Sort icon">Sort</button>
-      <button id="filterBtn"><img src="images/explore/filter.png" alt="Filter icon">Filter</button>
-      <div id="sortPopup" class="popup-menu">
-        <div class="popup-item">Option 1</div>
-        <div class="popup-item">Option 2</div>
-        <div class="popup-item">Option 3</div>
-      </div>
-      <div id="filterPopup" class="popup-menu">
-        <div class="popup-item">1학년</div>
-        <div class="popup-item">2학년</div>
-        <div class="popup-item">3학년</div>
-      </div>
-    </div> -->
     <div class="grid">
       <% classes.forEach((data) => { %>
       <div class="card"><div class="label"><%= data.class_id %></div><div class="sub"><%= data.total_count %>장</div></div>
       <% }) %>
     </div>
   </div>
-  <iframe class="bottom-nav" src="/bottom_nav.html"></iframe>
-  <script src="js/explore.js"></script>
+  <%- include('partials/bottom_nav') %>
+  <script src="/js/explore.js"></script>
 </body>
 </html>

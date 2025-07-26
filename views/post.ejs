@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Post</title>
+  <link rel="stylesheet" href="/css/post.css">
+</head>
+<body>
+  <div class="container">
+    <!-- 헤더 -->
+    <div class="header">
+      <button class="back-btn">
+        <img src="images/post/back_icon.png" alt="뒤로가기">
+      </button>
+      <h2 style="font-size: 1.5rem; ">post</h2>
+    </div>
+
+    <!-- 이미지 업로드 -->
+    <div class="upload-area">
+      <img src="images/post/upload_image.png" alt="click to upload">
+      <input type="file" accept="image/*">
+    </div>
+
+    <!-- 총 공부시간 -->
+    <div class="study-time">
+      <div class="label">오늘의 총 공부시간</div>
+      <div class="time-inputs">
+        <img src="images/post/clock_icon.png" alt="clock icon">
+        <input class="time-num" type="number" min="0" max="23" placeholder="0"><span class="time-unit">H</span>
+        <input class="time-num" type="number" min="0" max="59" placeholder="0"><span class="time-unit">M</span>
+        <input class="time-num" type="number" min="0" max="59" placeholder="0"><span class="time-unit">S</span>
+      </div>
+    </div>
+
+    <!-- 내용 입력 -->
+    <textarea placeholder="내용을 입력하세요."></textarea>
+
+    <!-- Post 버튼 -->
+    <button class="post-btn">post</button>
+  </div>
+
+  <!-- 하단 네비 -->
+  <%- include('partials/bottom_nav') %>
+  <script src="/js/post.js"></script>
+</body>
+</html>

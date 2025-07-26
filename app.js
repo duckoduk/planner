@@ -151,6 +151,16 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+// post.ejs 라우팅
+app.get('/post', isAuthenticated, (req, res) => {
+  res.render('post')
+})
+
+// profile.ejs 라우팅
+app.get('/profile', isAuthenticated, (req, res) => {
+  res.render('profile', {})
+})
+
 // 이미지 업로드 요청
 app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, res) => {
   try {
@@ -370,7 +380,7 @@ app.get('/user/me', isAuthenticated, (req, res) => {
     }
 });
 
-// 프로필 페이지
+// 프로필 페이지 -- 이건 또 뭐임?
 app.get('/profile-data', isAuthenticated, async (req, res) => {
 
     const student_id = req.session.studentId;
@@ -388,6 +398,8 @@ app.get('/profile-data', isAuthenticated, async (req, res) => {
     res.json({ success: true, images: data });
 });
 
+
+// 이거뭐임?
 app.get('/rank-data', isAuthenticated, async (req, res) => {
     const { data, error } = await supabase
         .from('class_data')

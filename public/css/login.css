@@ -1,0 +1,114 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.logo-box {
+  width: 100%;
+  height: 60%;
+  background-color: #e7f0ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  align-self: flex-start;
+  width: 100%;
+}
+
+#error1, #error2 {
+  color: red;
+  margin-top: 0;
+  display: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"],
+input[type="password"] {
+  width: 100%;
+  font-size: 16px;
+  padding: 18px 14px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.btn {
+  width: 100%;
+  font-size: 16px;
+  padding: 18px 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+p {
+  font-size: 14px;
+  color: #666;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* 모바일 반응형 */
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 16px;
+  }
+  input[type="number"],
+  input[type="password"],
+  .btn {
+    font-size: 15px;
+    padding: 16px 12px;
+    width: 100%;
+  }
+  h2 {
+    font-size: 22px;
+  }
+  .logo-box {
+    height: 35vh;
+  }
+}

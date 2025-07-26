@@ -1,0 +1,121 @@
+:root {
+    font-size: 16px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 480px;
+    padding: 1rem;
+    padding-bottom: 6rem;
+}
+
+/* 헤더 */
+.header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 0 1rem;
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+}
+
+.back-btn {
+    position: absolute;
+    left: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.back-btn img {
+    width: 1.5rem;
+    height: auto;
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #000;
+}
+
+/* 그리드 */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+/* 카드 */
+.card {
+    background-color: #F8F9FE;
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 비율을 1:0.8(높이80%)로 유지하는 패딩 트릭 */
+.card-img {
+    position: relative;
+    width: 100%;
+    padding-top: 70%;
+    /* 높이 = 너비의 80% */
+    background-color: #eaf0fc;
+    overflow: hidden;
+}
+
+.card-img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+}
+
+.card-info {
+    padding: 0.8rem;
+}
+
+.card-info .title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 0.25rem;
+}
+
+.card-info .time {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #000;
+}
+
+.card-info .time img {
+    width: 1rem;
+    height: auto;
+    margin-right: 0.5rem;
+}
+
+@media (max-width:480px) {
+    :root {
+        font-size: 4vw;
+    }
+}

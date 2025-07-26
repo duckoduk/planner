@@ -1,0 +1,110 @@
+:root {
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 480px;
+    padding: 1rem;
+    padding-bottom: 6rem;
+    box-sizing: border-box;
+}
+
+.profile-section {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.profile-section .title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #444;
+    margin-bottom: .5rem;
+}
+
+.profile-section .class {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: .25rem;
+}
+
+.profile-section .id-label {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.4;
+}
+
+.profile-section .id-label strong {
+    font-weight: 700;
+    color: #000;
+}
+
+.divider {
+    border: none;
+    height: 1px;
+    background-color: #ccc;
+    margin: 1rem 0;
+}
+
+.events-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: .75rem;
+}
+
+.events-list .event-item {
+    display: flex;
+    align-items: center;
+    background-color: #F8F9FE;
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-bottom: .75rem;
+    height: 4rem;
+    margin-bottom: 1.2rem;
+}
+
+/* 이미지가 왼쪽에 오도록 순서만 변경 */
+.event-item img.event-thumb {
+    width: 4rem;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.event-item .event-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    padding: 0 1rem;
+}
+
+.event-item .event-date {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+}
+
+.event-item .event-actions img {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: .75rem;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 480px) {
+    :root {
+        font-size: 4vw;
+    }
+}

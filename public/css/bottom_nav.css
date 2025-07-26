@@ -1,28 +1,7 @@
-<!-- Bottom Navigation (독립 HTML) -->
-<nav class="bottom-nav">
-  <a href="explore.html" target="_parent" class="nav-item active">
-    <img src="images/bottom_nav/explore.png" alt="Explore">
-    <span>explore</span>
-  </a>
-  <a href="post.html" target="_parent" class="nav-item">
-    <img src="images/bottom_nav/post.png" alt="Post">
-    <span>post</span>
-  </a>
-  <a href="/rank" target="_parent" class="nav-item">
-    <img src="images/bottom_nav/rank.png" alt="Rank">
-    <span>rank</span>
-  </a>
-  <a href="profile.html" target="_parent" class="nav-item">
-    <img src="images/bottom_nav/profile.png" alt="Profile">
-    <span>profile</span>
-  </a>
-</nav>
-
-<style>
-  .bottom-nav {
+.bottom-nav {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    height: 100px;
+    height: 4rem;
     background-color: #fff;
     display: flex;
     justify-content: space-around;
@@ -63,4 +42,3 @@
     color: #007aff;
     font-weight: 600;
   }
-</style>

@@ -1,0 +1,191 @@
+:root {
+    font-size: 16px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 480px;
+    padding: 1rem;
+    padding-bottom: 6rem;
+}
+
+/* 헤더 */
+.header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* 위쪽 여백 추가 */
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    height: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.back-btn {
+    position: absolute;
+    left: 0;
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+}
+
+.back-btn img {
+    width: 1.5rem;
+    height: auto;
+    display: block;
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    /* 볼드체로 변경 */
+    font-weight: 700;
+    color: #000;
+}
+
+/* 업로드 박스 */
+.upload-area {
+    width: 80%;
+    max-width: 360px;
+    margin: 0 auto 1rem;
+    position: relative;
+}
+
+.upload-area img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    border-radius: 1rem;
+}
+
+.upload-area input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* 총 공부시간 */
+.study-time {
+    margin-bottom: 1.5rem;
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+}
+
+.study-time .label {
+    font-size: .9rem;
+    color: #444;
+    margin-bottom: .25rem;
+}
+
+.time-inputs {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #000;
+    padding-bottom: 0.5rem;
+    /* 텍스트와 선 사이 여백 */
+    width: 80%;
+}
+
+.time-inputs img {
+    width: 1.5rem;
+    height: auto;
+    margin-right: .5rem;
+}
+
+.time-inputs .time-num {
+    width: 2.5rem;
+    border: none;
+    text-align: center;
+    font-size: 1rem;
+    outline: none;
+}
+
+.time-inputs .time-num+.time-unit,
+.time-inputs .time-unit+.time-num {
+    margin: 0 0.5rem;
+}
+
+.time-inputs .time-unit {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #000;
+}
+
+.study-time hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin-top: .5rem;
+}
+
+/* 내용 입력 */
+textarea {
+    width: 80%;
+    min-height: 6rem;
+    padding: .75rem 1rem;
+    border: 1px solid #ffffff;
+    border-radius: 1rem;
+    background-color: #ffffff;
+    resize: vertical;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
+    transition: border-color .2s, box-shadow .2s;
+    outline: none;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 1.5rem;
+}
+
+textarea:focus {
+    border-color: #007aff;
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, .2);
+}
+
+textarea::placeholder {
+    color: #aaa;
+    font-size: .9rem;
+}
+
+/* Post 버튼 */
+.post-btn {
+    width: 80%;
+    padding: .75rem 0;
+    background-color: #007aff;
+    border: none;
+    border-radius: 1rem;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+    height: 3rem;
+}
+
+@media screen and (max-width: 480px) {
+    :root {
+        font-size: 4vw;
+    }
+}
