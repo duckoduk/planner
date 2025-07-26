@@ -1,0 +1,59 @@
+<!-- partials/image_modal.ejs -->
+<style>
+  .image-modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .image-modal-overlay.active {
+    display: flex;
+  }
+
+  .image-modal-overlay img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    animation: fadeInZoom 0.3s ease;
+  }
+
+  @keyframes fadeInZoom {
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+</style>
+
+<div id="image-modal" class="image-modal-overlay" onclick="closeImageModal()">
+  <img id="image-modal-img" src="" alt="확대 이미지" />
+</div>
+
+<script>
+  function openImageModal(src) {
+    const modal = document.getElementById('image-modal');
+    const img = document.getElementById('image-modal-img');
+    img.src = src;
+    modal.classList.add('active');
+  }
+
+  function closeImageModal() {
+    const modal = document.getElementById('image-modal');
+    modal.classList.remove('active');
+  }
+
+  // 이벤트 연결
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.zoomable-image').forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openImageModal(img.src);
+      });
+    });
+  });
+</script>

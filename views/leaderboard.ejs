@@ -91,7 +91,7 @@
           s = s % 60
           %>
           <div class="post-card" > 
-            <img src="<%= image.image_link %>" alt="post image" />
+            <img src="<%= image.image_link %>" class="zoomable-image" alt="post image" />
             <div class="card-content">
               <div class="title"><%= image.student_id %></div>
               <div class="date"><%= h %>h <%= m %>m <%= s %>s</div>
@@ -105,6 +105,12 @@
 
   <!-- 하단 네비 -->
   <%- include('partials/bottom_nav') %>
+
+  <!-- 아래 include 이미지 확대 기능, 94번째 줄 처럼 class에 zoomable-image 지정해주면 됩니다 -->
+  <!-- 파일 위치: views/partials/image_modedl.ejs -->
+  <%- include('partials/image_modal') %>
+  <!--  -->
+
   <script src="/js/leaderboard.js"></script>
 </body>
 </html>
