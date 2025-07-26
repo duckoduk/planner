@@ -407,7 +407,7 @@ app.get('/', (req, res) => {
 })
 
 // 로그아웃
-app.post('/logout', (req, res) => {
+app.get('/logout', (req, res) => {
   // 세션 파괴 (로그아웃)
   req.session.destroy(err => {
     if (err) {
@@ -416,7 +416,7 @@ app.post('/logout', (req, res) => {
     }
     // 클라이언트에게 성공 응답
     res.clearCookie('connect.sid'); // express-session 기본 쿠키 이름
-    res.json({ success: true, message: '로그아웃 성공!' });
+    res.sendFile(path.join(__dirname, 'public', 'login.html')); // 로그인 페이지로 리다이렉트
   });
 });
 
