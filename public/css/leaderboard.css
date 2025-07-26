@@ -117,6 +117,11 @@ body {
     margin-bottom: 0.25rem;
 }
 
+.rank-info {
+    display: flex;
+    align-items: flex-end;
+}
+
 .progress-container {
     height: 1.5rem;
     background-color: #E7F0FF;
@@ -180,6 +185,12 @@ body {
 .card-content .streak {
     font-size: 0.875rem;
     font-weight: 700;
+}
+
+#rightt {
+    margin-left: auto;
+    font-size: 0.9rem;
+    color: #444;
 }
 
 @media screen and (max-width: 480px) {

@@ -191,7 +191,7 @@ app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, r
       .from('planner-image')
       .upload(storagePath, fs.readFileSync(newFilePath), {
         contentType: file.mimetype,
-        upsert: false,
+        upsert: false,  
       });
 
     if (uploadError) {
@@ -214,11 +214,11 @@ app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, r
     // 3. DB 테이블 삽입
     const { error: insertError } = await supabase
       .from('image')
-      .insert([{ student_id, image_link, text, total_time: Number(total_time), created_date: nowDate }]);
+      .insert([{ student_id, image_link, text, total_time: Number(total_time), created_date: nowDate, username: req.session.username }]);
 
     if (insertError) {
       console.error(insertError);
-      if (fs.existsSync(newFilePath)) fs.unlinkSync(newFilePath); // 실패시 파일 삭제
+      if (fs.existsSync(newFilePath)) fs.unlinkSync(newFilePath); // 실패 시 파일 삭제
       return res.status(500).json({ message: 'DB 저장 실패' });
     }
     const classId = String(student_id).slice(0, 3);
@@ -280,7 +280,7 @@ app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, r
       // 존재하지 않으면 새로 insert
       const { error: insertError } = await supabase
         .from('user_data')
-        .insert([{ student_id, total_count: 1 }]);
+        .insert([{ student_id, total_count: 1, username: req.session.username }]);
 
       if (insertError) {
         console.error('user_data 행 생성 실패:', insertError);
@@ -335,15 +335,16 @@ app.get('/leaderboard/:classId', isAuthenticated, async (req, res) => {
   // class_id가 cId인 데이터 가져오기
   const { data: imageData, error: error } = await supabase //이건 image테이블
     .from('image')
-    .select('student_id, image_link, text, total_time') //<-- 필요한 데이터만 골라 써
+    .select('student_id, image_link, text, total_time, username') //<-- 필요한 데이터만 골라 써
     .eq('class_id', cId)
+    .order('created_at', { ascending: false })
     .limit(10) // 상위 10개만 가져오기 <-- 얼마나 필요한지 몰라서 그냥 씀
   if (error) {
     console.error('랭킹 데이터 조회 실패:', error);
   }
   const { data: userData, error: userError } = await supabase //이건 user_data테이블
     .from('user_data')
-    .select('student_id, total_count, total_time')
+    .select('student_id, total_count, total_time, username')
     .order('total_count', { ascending: false }) // total_count 기준으로 내림차순 정렬(랭킹 정렬임)
     .eq('class_id', cId)
     .limit(5) // 상위 10개만 가져오기
