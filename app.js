@@ -186,11 +186,15 @@ app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, r
       .getPublicUrl(storagePath);
 
     const image_link = urlData.publicUrl;
+    
+    // created_date 하는거
+    const today = new Date()
+    const nowDate = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
 
     // 3. DB 테이블 삽입
     const { error: insertError } = await supabase
       .from('image')
-      .insert([{ student_id, image_link, text, total_time: Number(total_time) }]);
+      .insert([{ student_id, image_link, text, total_time: Number(total_time), created_date: nowDate}]);
 
     if (insertError) {
       console.error(insertError);
@@ -199,40 +203,39 @@ app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, r
     }
     const classId = String(student_id).slice(0, 3);
 
-// class_data 테이블에서 해당 class_id 조회
-const { data: classData, error: selectError } = await supabase
-  .from('class_data')
-  .select('total_count')
-  .eq('class_id', classId)
-  .single();
+    // class_data 테이블에서 해당 class_id 조회
+    const { data: classData, error: selectError } = await supabase
+      .from('class_data')
+      .select('total_count')
+      .eq('class_id', classId)
+      .single();
 
-if (selectError && selectError.code !== 'PGRST116') {
-  // 다른 에러일 경우 로그
-  console.error('조회 중 오류:', selectError);
-}
+    if (selectError && selectError.code !== 'PGRST116') {
+      // 다른 에러일 경우 로그
+      console.error('조회 중 오류:', selectError);
+    }
 
-if (classData) {
-  const newCount = classData.total_count + 1;
+    if (classData) {
+      const newCount = classData.total_count + 1;
 
-  const { error: updateError } = await supabase
-    .from('class_data')
-    .update({ total_count: newCount })
-    .eq('class_id', classId);
+      const { error: updateError } = await supabase
+        .from('class_data')
+        .update({ total_count: newCount })
+        .eq('class_id', classId);
 
-  if (updateError) {
-    console.error('업데이트 실패:', updateError);
-  }
-} else {
-  // 해당 class_id가 없으면 새로 추가
-  const { error: insertError } = await supabase
-    .from('class_data')
-    .insert([{ class_id: classId, total_count: 1 }]);
+      if (updateError) {
+        console.error('업데이트 실패:', updateError);
+      }
+    } else {
+      // 해당 class_id가 없으면 새로 추가
+      const { error: insertError } = await supabase
+        .from('class_data')
+        .insert([{ class_id: classId, total_count: 1 }]);
 
-  if (insertError) {
-    console.error('삽입 실패:', insertError);
-  }
-}
-
+      if (insertError) {
+        console.error('삽입 실패:', insertError);
+      }
+    }
 
     // user_data 테이블 데이터 변경
     const { data: userData, error: userSelectError } = await supabase
@@ -242,17 +245,17 @@ if (classData) {
     .single();
 
     if (userData) {
-    // 이미 존재하면 total_count +1로 업데이트
-    const newUserCount = userData.total_count + 1;
+      // 이미 존재하면 total_count +1로 업데이트
+      const newUserCount = userData.total_count + 1;
 
-    const { error: userUpdateError } = await supabase
-        .from('user_data')
-        .update({ total_count: newUserCount })
-        .eq('student_id', student_id);
+      const { error: userUpdateError } = await supabase
+          .from('user_data')
+          .update({ total_count: newUserCount })
+          .eq('student_id', student_id);
 
-    if (userUpdateError) {
-        console.error('user_data 업데이트 실패:', userUpdateError);
-    }
+      if (userUpdateError) {
+          console.error('user_data 업데이트 실패:', userUpdateError);
+      }
     } else {
     // 존재하지 않으면 새로 insert
     const { error: insertError } = await supabase
@@ -306,13 +309,11 @@ app.get('/explore', isAuthenticated, async (req, res) => {
 })
 
 app.get('/leaderboard/:classId', isAuthenticated, async (req, res) => {
-  const t = req.params.classId.split('-')
-  const grade = t[0]
-  const classNum = t[1]
+  let [ grade, classNum ] = req.params.classId.split('-').map((s) => {return String(s)})
   if (classNum.length === 1) classNum = '0' + classNum
   const cId = grade + classNum
   // class_id가 cId인 데이터 가져오기
-  const { imageData, error } = await supabase //이건 image테이블
+  const { data: imageData, error: error } = await supabase //이건 image테이블
     .from('image')
     .select('student_id, image_link, text, total_time') //<-- 필요한 데이터만 골라 써
     .eq('class_id', cId)
@@ -320,20 +321,18 @@ app.get('/leaderboard/:classId', isAuthenticated, async (req, res) => {
   if (error) {
     console.error('랭킹 데이터 조회 실패:', error);
   }
-  const { userData, userError } = await supabase //이건 user_data테이블
+  const { data: userData, error: userError } = await supabase //이건 user_data테이블
     .from('user_data')
     .select('student_id, total_count, total_time')
     .order('total_count', { ascending: false }) // total_count 기준으로 내림차순 정렬(랭킹 정렬임)
     .eq('class_id', cId)
-    .limit(10) // 상위 10개만 가져오기
+    .limit(5) // 상위 10개만 가져오기
   if (userError) {
     console.error('유저 데이터 조회 실패:', userError);
     return res.status(500).json({ success: false, message: '서버 오류' });
   }
-  console.log(imageData, userData);
-  return res.render('leaderboard', { image: imageData, rank: userData, classId: cId });
-  // image에서 created_at이 오늘이고 class_id가 cId인 것들 다 가져옴
-  // 아몰라 머리 안돌아감 걍 저기 뭐냐 피그마 보고 필요할거같은거 가져와줘
+  console.log(imageData, userData)
+  return res.render('leaderboard', { images: imageData, rank: userData, classId: req.params.classId });
 
 })
 

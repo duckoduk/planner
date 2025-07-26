@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Post Leaderboard</title>
+  <title><%= classId %> Leaderboard</title>
   <style>
     :root { font-size: 16px; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -178,40 +178,50 @@
     <!-- 헤더 -->
     <div class="header">
       <button class="back-btn">
-        <img src="images/post/back_icon.png" alt="뒤로가기" />
+        <img src="/images/post/back_icon.png" alt="뒤로가기" />
       </button>
-      <h2>1-7</h2>
+      <h2><%= classId %></h2>
     </div>
 
     <!-- 순위 리스트 -->
     <ul class="rank-list">
+      <% if (rank.length === 0) { %>
+          <p>아직 참여자 정보가 없습니다.</p>
+      <% } %>
+      <% if (rank[0]) { %>
       <li class="rank-item">
         <div class="badge first">1st</div>
         <div class="progress-block">
-          <div class="rank-info">000</div>
+          <div class="rank-info"><%= rank[0].student_id %></div>
           <div class="progress-container">
             <div class="progress-bar" style="width: 90%;"></div>
           </div>
         </div>
       </li>
+      <% } %>
+      <% if (rank[1]) { %>
       <li class="rank-item">
         <div class="badge second">2nd</div>
         <div class="progress-block">
-          <div class="rank-info">000</div>
+          <div class="rank-info"><%= rank[1].student_id %></div>
           <div class="progress-container">
             <div class="progress-bar" style="width: 75%;"></div>
           </div>
         </div>
       </li>
+      <% } %>
+      <% if (rank[2]) { %>
       <li class="rank-item">
         <div class="badge third">3rd</div>
         <div class="progress-block">
-          <div class="rank-info">000</div>
+          <div class="rank-info"><%= rank[2].student_id %></div>
           <div class="progress-container">
             <div class="progress-bar" style="width: 55%;"></div>
           </div>
         </div>
       </li>
+      <% } %>
+      <% if (rank[3]) { %>
       <li class="rank-item">
         <div class="badge plain">4</div>
         <div class="progress-block">
@@ -221,6 +231,8 @@
           </div>
         </div>
       </li>
+      <% } %>
+      <% if (rank[4]) { %>
       <li class="rank-item">
         <div class="badge plain">5</div>
         <div class="progress-block">
@@ -230,72 +242,30 @@
           </div>
         </div>
       </li>
+      <% } %>
     </ul>
+    <!-- 갤러리 보기 버튼(추가요망) -->
 
+
+    <% if (images.length > 0) { %>
     <!-- 포스트 카드들 -->
-    <div class="card-wrap" style="padding-top: 2rem;">
-      <div class="post-card" > 
-        <img src="images/blank_image.png" alt="post image" />
-        <div class="card-content">
-          <div class="title">000</div>
-          <div class="date">2025.07.19</div>
-          <div class="streak">연속 8일차! 49h 58m 32s</div>
-        </div>
+      <div class="card-wrap" style="padding-top: 2rem;">
+        <% images.forEach((image) => { %>
+          <div class="post-card" > 
+            <img src="<%= image.image_link %>" alt="post image" />
+            <div class="card-content">
+              <div class="title"><%= image.student_id %></div>
+              <div class="date"><%= image.total_time %></div>
+              <div class="streak"><%= image.text %></div>
+            </div>
+          </div>
+        <% }) %>
       </div>
-      <!-- 반복 항목 추가 -->
-       <div class="post-card">
-        <img src="images/blank_image.png" alt="post image" />
-        <div class="card-content">
-          <div class="title">000</div>
-          <div class="date">2025.07.19</div>
-          <div class="streak">연속 8일차! 49h 58m 32s</div>
-        </div>
-      </div>
-      <div class="post-card">
-        <img src="images/blank_image.png" alt="post image" />
-        <div class="card-content">
-          <div class="title">000</div>
-          <div class="date">2025.07.19</div>
-          <div class="streak">연속 8일차! 49h 58m 32s</div>
-        </div>
-      </div>
-      <div class="post-card">
-        <img src="images/blank_image.png" alt="post image" />
-        <div class="card-content">
-          <div class="title">000</div>
-          <div class="date">2025.07.19</div>
-          <div class="streak">연속 8일차! 49h 58m 32s</div>
-        </div>
-      </div>
-      <div class="post-card">
-        <img src="images/blank_image.png" alt="post image" />
-        <div class="card-content">
-          <div class="title">000</div>
-          <div class="date">2025.07.19</div>
-          <div class="streak">연속 8일차! 49h 58m 32s</div>
-        </div>
-      </div>
-      <div class="post-card">
-        <img src="images/blank_image.png" alt="post image" />
-        <div class="card-content">
-          <div class="title">000</div>
-          <div class="date">2025.07.19</div>
-          <div class="streak">연속 8일차! 49h 58m 32s</div>
-        </div>
-      </div>
-      <div class="post-card">
-        <img src="images/blank_image.png" alt="post image" />
-        <div class="card-content">
-          <div class="title">000</div>
-          <div class="date">2025.07.19</div>
-          <div class="streak">연속 8일차! 49h 58m 32s</div>
-        </div>
-      </div>
-
-    </div>
+    <% } %>
   </div>
 
   <!-- 하단 네비 -->
-  <iframe class="bottom-nav" src="bottom_nav.html"></iframe>
+  <iframe class="bottom-nav" src="/bottom_nav.html"></iframe>
+  <script src="/js/leaderboard.js"></script>
 </body>
 </html>
