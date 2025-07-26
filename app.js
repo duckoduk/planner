@@ -174,7 +174,7 @@ app.get('/profile', isAuthenticated, async (req, res) => {
 // 이미지 업로드 요청
 app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, res) => {
   try {
-    student_id = req.session.studentId;
+    const student_id = req.session.studentId;
     const { text, total_time } = req.body;
     const file = req.file;
 

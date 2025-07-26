@@ -32,7 +32,7 @@
       s = s % 60
       %>
         <div class="event-item">
-          <img class="event-thumb" src="<%= image.image_link %>" alt="이벤트 이미지">
+          <img class="event-thumb zoomable-image" src="<%= image.image_link %>" alt="이벤트 이미지">
           <div class="event-info">
             <div class="event-date"><%= image.created_date %></div>
             <div class="event-time"><%= h %>h <%= m %>m <%= s %>s</div>
@@ -41,7 +41,13 @@
       <% }) %>
     </div>
   </div>
+
   <!-- 바텀 내비게이션 -->
   <%- include('partials/bottom_nav') %>
+  
+  <!-- 이미지 확대 -->
+  <%- include('partials/image_modal') %>
+  <script> document.getElementById('profile').className += ' active' </script>
+  <script src="/js/image_modal.js"></script>
 </body>
 </html>

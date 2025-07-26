@@ -105,12 +105,11 @@
 
   <!-- 하단 네비 -->
   <%- include('partials/bottom_nav') %>
-
-  <!-- 아래 include 이미지 확대 기능, 94번째 줄 처럼 class에 zoomable-image 지정해주면 됩니다 -->
-  <!-- 파일 위치: views/partials/image_modedl.ejs -->
+  <% document.getElementById('explore').className += ' active' %>
+  <!-- 이미지 확대 -->
   <%- include('partials/image_modal') %>
-  <!--  -->
 
-  <script src="/js/leaderboard.js"></script>
+  <script> document.getElementById('profile').className += ' active' </script>
+  <script src="/js/image_modal.js"></script>
 </body>
 </html>
