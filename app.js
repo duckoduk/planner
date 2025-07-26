@@ -375,7 +375,7 @@ app.get('/leaderboard/:classId', isAuthenticated, async (req, res) => {
 // login.html
 app.get('/', (req, res) => {
   if (req.session && req.session.userId) {
-    return res.redirect('/post'); // 또는 /profile 등 원하는 경로
+    return res.redirect('/explore'); 
   }
   res.sendFile(path.join(__dirname, 'public', 'login.html'))
 })
