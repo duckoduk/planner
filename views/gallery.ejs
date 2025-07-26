@@ -3,124 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gallery</title>
+  <title><%= classId %> Gallery</title>
   <link rel="stylesheet" href="/css/gallery.css">
 </head>
 <body>
   <div class="container">
     <!-- 헤더 -->
     <div class="header">
-      <button class="back-btn">
-        <img src="images/post/back_icon.png" alt="뒤로가기">
+      <button class="back-btn" onclick="history.back()">
+        <img src="/images/post/back_icon.png" alt="뒤로가기">
       </button>
-      <h2 style="font-weight: 800;">1-7</h2>
+      <h2 style="font-weight: 800;"><%= classId %></h2>
     </div>
 
     <!-- 갤러리 그리드 -->
     <div class="gallery-grid">
-      <!-- 카드 예시 8개 -->
-      <div class="card">
-        <div class="card-img">
-          <img src="images/blank_image.png" alt="이미지 없음">
-        </div>
-        <div class="card-info">
-          <div class="title">000</div>
-          <div class="time">
-            <img src="images/post/clock_icon.png" alt="시계">
-            5h 48m 21s
+      <% if (images.length === 0) { %>
+        <p>아직 참여자 정보가 없습니다.</p>
+      <% } else { %>
+        <% images.forEach((image) => { 
+          let s = image.total_time;
+          const h = parseInt(s / 3600);
+          s = s % 3600;
+          const m = parseInt(s / 60);
+          s = s % 60;
+        %>
+        <div class="card">
+          <div class="card-img">
+            <img src="<%= image.image_link %>" class="zoomable-image" alt="이미지 없음">
+          </div>
+          <div class="card-info">
+            <div class="title"><%= image.username %></div>
+            <div class="time">
+              <img src="/images/post/clock_icon.png" alt="시계">
+              <%= h %>h <%= m %>m <%= s %>s
+            </div>
           </div>
         </div>
-      </div>
-      <!-- ... 필요만큼 복제 ... -->
-       <div class="card">
-        <div class="card-img">
-          <img src="images/blank_image.png" alt="이미지 없음">
-        </div>
-        <div class="card-info">
-          <div class="title">000</div>
-          <div class="time">
-            <img src="images/post/clock_icon.png" alt="시계">
-            5h 48m 21s
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">
-          <img src="images/blank_image.png" alt="이미지 없음">
-        </div>
-        <div class="card-info">
-          <div class="title">000</div>
-          <div class="time">
-            <img src="images/post/clock_icon.png" alt="시계">
-            5h 48m 21s
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">
-          <img src="images/blank_image.png" alt="이미지 없음">
-        </div>
-        <div class="card-info">
-          <div class="title">000</div>
-          <div class="time">
-            <img src="images/post/clock_icon.png" alt="시계">
-            5h 48m 21s
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">
-          <img src="images/blank_image.png" alt="이미지 없음">
-        </div>
-        <div class="card-info">
-          <div class="title">000</div>
-          <div class="time">
-            <img src="images/post/clock_icon.png" alt="시계">
-            5h 48m 21s
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">
-          <img src="images/blank_image.png" alt="이미지 없음">
-        </div>
-        <div class="card-info">
-          <div class="title">000</div>
-          <div class="time">
-            <img src="images/post/clock_icon.png" alt="시계">
-            5h 48m 21s
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">
-          <img src="images/blank_image.png" alt="이미지 없음">
-        </div>
-        <div class="card-info">
-          <div class="title">000</div>
-          <div class="time">
-            <img src="images/post/clock_icon.png" alt="시계">
-            5h 48m 21s
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">
-          <img src="images/blank_image.png" alt="이미지 없음">
-        </div>
-        <div class="card-info">
-          <div class="title">000</div>
-          <div class="time">
-            <img src="images/post/clock_icon.png" alt="시계">
-            5h 48m 21s
-          </div>
-        </div>
-      </div>
-      
+        <% }) %>
+      <% } %>
     </div>
   </div>
 
   <!-- 하단 네비게이션 -->
   <%- include('partials/bottom_nav') %>
+  <!-- 이미지 확대 -->
+  <%- include('partials/image_modal') %>  
 </body>
 </html>

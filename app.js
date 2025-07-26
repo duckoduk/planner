@@ -371,7 +371,33 @@ app.get('/leaderboard/:classId', isAuthenticated, async (req, res) => {
   return res.render('leaderboard', { images: imageData, rank: userData, classId: req.params.classId });
 
 })
+app.get('/gallery/:classId', isAuthenticated, async (req, res) => {
+let [grade, classNum] = req.params.classId.split('-').map((s) => { return String(s) })
+  if (classNum.length === 1) classNum = '0' + classNum
+  const cId = grade + classNum
+  // class_id가 cId인 데이터 가져오기
+  const { data: imageData, error: error } = await supabase //이건 image테이블
+    .from('image')
+    .select('student_id, image_link, text, total_time, username') //<-- 필요한 데이터만 골라 써
+    .eq('class_id', cId)
+    .order('created_at', { ascending: false })
 
+  if (error) {
+    console.error('랭킹 데이터 조회 실패:', error);
+  }
+  const { data: userData, error: userError } = await supabase //이건 user_data테이블
+    .from('user_data')
+    .select('student_id, total_count, total_time, username')
+    .order('total_count', { ascending: false }) // total_count 기준으로 내림차순 정렬(랭킹 정렬임)
+    .eq('class_id', cId)
+    
+  if (userError) {
+    console.error('유저 데이터 조회 실패:', userError);
+    return res.status(500).json({ success: false, message: '서버 오류' });
+  }
+  return res.render('gallery', { images: imageData, rank: userData, classId: req.params.classId });
+
+})
 // login.html
 app.get('/', (req, res) => {
   if (req.session && req.session.userId) {
@@ -475,8 +501,6 @@ app.get('/rank', isAuthenticated, async (req, res) => {
     res.status(500).send('서버 오류가 발생했습니다.');
   }
 });
-
-
 
 // server open
 app.listen(port, () => {
