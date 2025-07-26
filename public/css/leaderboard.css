@@ -131,8 +131,8 @@ body {
 
 /* 카드 리스트 (아래 리스트) */
 .card-wrap {
-    background-color: #B4DBFF;
-    border-radius: 3rem;
+    background-color: #E7F0FF;
+    border-radius: 1rem;
     padding: 1rem;
     width: 110%;
     margin: 0 -5%;

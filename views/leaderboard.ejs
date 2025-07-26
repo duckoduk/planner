@@ -10,7 +10,7 @@
   <div class="container">
     <!-- 헤더 -->
     <div class="header">
-      <button class="back-btn">
+      <button class="back-btn" onclick="event.preventDefault(); window.location.replace('/explore')">
         <img src="/images/post/back_icon.png" alt="뒤로가기" />
       </button>
       <h2><%= classId %></h2>
@@ -83,11 +83,18 @@
     <!-- 포스트 카드들 -->
       <div class="card-wrap" style="padding-top: 2rem;">
         <% images.forEach((image) => { %>
+          <%
+          let s = image.total_time
+          const h = parseInt(s / 3600)
+          s = s % 3600
+          const m = parseInt(s / 60)
+          s = s % 60
+          %>
           <div class="post-card" > 
             <img src="<%= image.image_link %>" alt="post image" />
             <div class="card-content">
               <div class="title"><%= image.student_id %></div>
-              <div class="date"><%= image.total_time %></div>
+              <div class="date"><%= h %>h <%= m %>m <%= s %>s</div>
               <div class="streak"><%= image.text %></div>
             </div>
           </div>
