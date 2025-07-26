@@ -462,4 +462,3 @@ app.get('/rank', isAuthenticated, async (req, res) => {
 app.listen(port, () => {
   console.log(`${port}(으)로 서버가 열렸습니다.`)
 })
-asdfsd
