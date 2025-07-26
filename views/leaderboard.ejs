@@ -25,7 +25,7 @@
       <li class="rank-item">
         <div class="badge first">1st</div>
         <div class="progress-block">
-          <div class="rank-info"><%= rank[0].student_id %> <%= rank[0].username %> <span id="rightt"><%= rank[0].total_count %> 업로드</span></div>
+          <div class="rank-info"><%= rank[0].student_id %> <%= rank[0].username %> <span id="rightt"><%= rank[0].total_count %> up</span></div>
           <div class="progress-container">
             <div class="progress-bar" style="width: 100%;"></div>
           </div>
@@ -36,7 +36,7 @@
       <li class="rank-item">
         <div class="badge second">2nd</div>
         <div class="progress-block">
-          <div class="rank-info"><%= rank[1].student_id %> <%= rank[1].username %><span id="rightt"><%= rank[1].total_count %> 업로드</span></div>
+          <div class="rank-info"><%= rank[1].student_id %> <%= rank[1].username %><span id="rightt"><%= rank[1].total_count %> up</span></div>
           <div class="progress-container">
             <div class="progress-bar" style="width:<%= rank[1].total_count / rank[0].total_count * 100 %>%;"></div>
           </div>
@@ -47,7 +47,7 @@
       <li class="rank-item">
         <div class="badge third">3rd</div>
         <div class="progress-block">
-          <div class="rank-info"><%= rank[2].student_id %> <%= rank[2].username %><span id="rightt"><%= rank[2].total_count %> 업로드</span></div>
+          <div class="rank-info"><%= rank[2].student_id %> <%= rank[2].username %><span id="rightt"><%= rank[2].total_count %> up</span></div>
           <div class="progress-container">
             <div class="progress-bar" style="width:<%= rank[2].total_count / rank[0].total_count * 100 %>%;"></div>
           </div>
@@ -58,7 +58,7 @@
       <li class="rank-item">
         <div class="badge plain">4</div>
         <div class="progress-block">
-          <div class="rank-info"><%= rank[3].student_id %> <%= rank[3].username %><span id="rightt"><%= rank[3].total_count %> 업로드</span></div>
+          <div class="rank-info"><%= rank[3].student_id %> <%= rank[3].username %><span id="rightt"><%= rank[3].total_count %> up</span></div>
           <div class="progress-container">
             <div class="progress-bar" style="width:<%= rank[3].total_count / rank[0].total_count * 100 %>%;"></div>
           </div>
@@ -69,7 +69,7 @@
       <li class="rank-item">
         <div class="badge plain">5</div>
         <div class="progress-block">
-          <div class="rank-info"><%= rank[4].student_id %> <%= rank[4].username %><span id="rightt"><%= rank[4].total_count %> 업로드</span></div>
+          <div class="rank-info"><%= rank[4].student_id %> <%= rank[4].username %><span id="rightt"><%= rank[4].total_count %> up</span></div>
           <div class="progress-container">
             <div class="progress-bar" style="width:<%= rank[4].total_count / rank[0].total_count * 100 %>%;"></div>
           </div>
@@ -95,7 +95,7 @@
             <img src="<%= image.image_link %>" class="zoomable-image" alt="post image" />
             <div class="card-content">
               <div class="title"><%= image.student_id %> <%= image.username %></div>
-              <div class="date"><%= h %>h <%= m %>m <%= s %>s</div>
+              <div class="date"><%= image.created_date %> / <%= h %>h <%= m %>m <%= s %>s</div>
               <div class="streak"><%= image.text %></div>
             </div>
           </div>

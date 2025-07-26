@@ -173,10 +173,14 @@ app.get('/profile', isAuthenticated, async (req, res) => {
 
 // 이미지 업로드 요청
 app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, res) => {
-  try {
+  try {   
     const student_id = req.session.studentId;
     const { text, total_time } = req.body;
     const file = req.file;
+
+    // created_date 하는거
+    const today = new Date()
+    const nowDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
 
     // 중복 체크 //
     const { data: existingImages, error: checkError } = await supabase
@@ -222,10 +226,6 @@ app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, r
       .getPublicUrl(storagePath);
 
     const image_link = urlData.publicUrl;
-
-    // created_date 하는거
-    const today = new Date()
-    const nowDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
 
     // 3. DB 테이블 삽입
     const { error: insertError } = await supabase
@@ -351,7 +351,7 @@ app.get('/leaderboard/:classId', isAuthenticated, async (req, res) => {
   // class_id가 cId인 데이터 가져오기
   const { data: imageData, error: error } = await supabase //이건 image테이블
     .from('image')
-    .select('student_id, image_link, text, total_time, username') //<-- 필요한 데이터만 골라 써
+    .select('student_id, image_link, text, total_time, username, created_date') //<-- 필요한 데이터만 골라 써
     .eq('class_id', cId)
     .order('created_at', { ascending: false })
     .limit(10) // 상위 10개만 가져오기 <-- 얼마나 필요한지 몰라서 그냥 씀
@@ -420,57 +420,14 @@ app.get('/logout', (req, res) => {
   });
 });
 
-// 정보 요청(프론트에서 현재 사용자 정보 불러올 때 사용)
-app.get('/user/me', isAuthenticated, (req, res) => {
-  // req.session에 저장된 정보 활용
-  if (req.session.userId) {
-    return res.json({
-      success: true,
-      userId: req.session.userId,
-      username: req.session.username,
-      studentId: req.session.studentId
-    });
-  } else {
-    return res.status(401).json({ message: '로그인 정보가 없습니다.' });
-  }
-});
-
-
-// 이거뭐임?
-app.get('/rank-data', isAuthenticated, async (req, res) => {
-  const { data, error } = await supabase
-    .from('class_data')
-    .select('class_id, total_time, total_count')
-    .order('total_count', { ascending: false })
-
-  if (error) {
-    console.error('랭크 데이터 조회 실패:', error);
-    return res.status(500).json({ success: false, message: '서버 오류' });
-  }
-
-  res.json({ success: true, ranking: data });
-});
-
 //rank.ejs 라우팅
 app.get('/rank', isAuthenticated, async (req, res) => {
   try {
     // 쿼리에서 type을 받아서 선택 (기본: class)
     const type = req.query.type === 'individual' ? 'individual' : 'class';
-    const tableName = type === 'individual' ? 'user_data' : 'class_data';
-
-    const { data, error } = await supabase
-      .from(tableName)
-      .select('class_id, total_time, total_count')
-      .order('total_count', { ascending: false })
-      .order('total_time', { ascending: false });
-
-    if (error) {
-      console.error(`${type} 랭킹 조회 실패:`, error);
-      return res.status(500).send('랭킹 데이터를 불러오는 중 오류가 발생했습니다.');
-    }
-
+    
     const formatTime = (totalSeconds) => {
-      if (!totalSeconds || totalSeconds < 0) return '0초';
+      if (!totalSeconds || totalSeconds < 0) return '0s';
       const hours = Math.floor(totalSeconds / 3600);
       const minutes = Math.floor((totalSeconds % 3600) / 60);
       const seconds = totalSeconds % 60;
@@ -481,21 +438,32 @@ app.get('/rank', isAuthenticated, async (req, res) => {
       return result.trim();
     };
 
-    const rankingData = data.map(row => {
-      let classId = String(row.class_id);
-      return {
-        ...row,
-        class_name: `${classId.charAt(0)}-${parseInt(classId.substring(1, 3))}`,
-        total_time_formatted: formatTime(row.total_time)
-      };
-    });
-
-    res.render('rank', {
-      ranking: rankingData,
-      page: 'rank',
-      type,
-      title: type === 'individual' ? '개인 랭킹' : '반별 랭킹'
-    });
+    if (type === 'individual') {
+      const { data, error } = await supabase
+        .from('user_data')
+        .select('student_id, username, total_time, total_count')
+        .order('total_count', { ascending: false })
+        .order('total_time', { ascending: false });
+      
+      if (error) {
+        console.error(`individual 랭킹 조회 실패:`, error);
+        return res.status(500).send('랭킹 데이터를 불러오는 중 오류가 발생했습니다.');
+      }
+      res.render('rank', {ranking: data, type: type})
+    } else {
+      const { data, error } = await supabase
+        .from('class_data')
+        .select('class_id, total_time, total_count')
+        .order('total_count', { ascending: false })
+        .order('total_time', { ascending: false })
+        .order('class_id', { ascending: true })
+      
+      if (error) {
+        console.error(`class 랭킹 조회 실패:`, error);
+        return res.status(500).send('랭킹 데이터를 불러오는 중 오류가 발생했습니다.');
+      }
+      res.render('rank', {ranking: data, type: type})
+    }
   } catch (err) {
     console.error('랭킹 페이지 렌더링 오류:', err);
     res.status(500).send('서버 오류가 발생했습니다.');

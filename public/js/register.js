@@ -26,9 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const classNum = parseInt(idString.substring(1, 3), 10);
         let numberError = false
         if (idString.length !== 5) numberError = true
-        else if (grade < 1 || grade > 3) numberError = true
-        else if ((grade === 1 || grade === 2) && (classNum > 12 || classNum < 1)) numberError = true
-        else if ((grade === 3) && (classNum > 14 || classNum < 1)) numberError = true
+        else if (grade < 1 || grade > 2) numberError = true
+        else if (classNum > 12 || classNum < 1) numberError = true
         
         if (numberError) {
             errorMessage.textContent = '유효하지 않은 학번입니다.'

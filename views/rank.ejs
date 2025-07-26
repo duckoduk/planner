@@ -3,70 +3,121 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rank</title>
+  <title>Ranking</title>
   <link rel="stylesheet" href="/css/rank.css">
 </head>
 <body>
  <div class="container">
-  <h2 style="margin-top: 3rem;">Leaderboard</h2>
+  <h2 style="margin-top: 3rem;">Ranking</h2>
   <div class="tabs">
-    <a href="/rank?type=class" class="tab-button <%= type === 'class' ? 'active' : '' %>">class</a>
-    <a href="/rank?type=individual" class="tab-button <%= type === 'individual' ? 'active' : '' %>">individual</a>
+    <a href="#" onclick="event.preventDefault(); window.location.replace('/rank?type=class')" class="tab-button <%= type === 'class' ? 'active' : '' %>">class</a>
+    <a href="#" onclick="event.preventDefault(); window.location.replace('/rank?type=individual')" class="tab-button <%= type === 'individual' ? 'active' : '' %>">individual</a>
   </div>
 
 
+  <% if (type === 'individual') { %>
+    <!-- individual일 때 -->
+    <!-- 상위 3위 -->
+    <div class="rank-wrapper">
+    <% if (ranking && ranking.length >= 3) { %>
+      <!-- 2 -->
+      <div class="rank-item">
+        <div class="circle">2<sup>nd</sup></div>
+        <div class="flabel"><%= ranking[1].student_id %></div>
+        <div class="label"><%= ranking[1].username %></div>
+        <div class="sub-info">
+          <img src="/images/rank/note.png" alt="points icon" class="note-icon">
+          <%= ranking[1].total_count %> up
+        </div>
+      </div>
 
+      <!-- 1 -->
+      <div class="rank-item">
+        <img src="/images/rank/crown.png" class="crown" alt="Crown">
+        <div class="circle" style="margin-top: 0.5rem;">1<sup>st</sup></div>
+        <div class="flabel"><%= ranking[0].student_id %></div>
+        <div class="label"><%= ranking[0].username %></div>
+        <div class="sub-info">
+          <img src="/images/rank/note.png" alt="points icon" class="note-icon">
+          <%= ranking[0].total_count %> up
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="rank-item">
+        <div class="circle">3<sup>rd</sup></div>
+        <div class="flabel"><%= ranking[2].student_id %></div>
+        <div class="label"><%= ranking[2].username %></div>
+        <div class="sub-info">
+          <img src="/images/rank/note.png" alt="points icon" class="note-icon">
+          <%= ranking[2].total_count %> up
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+    <!-- 나머지 -->
+    <div class="list-container">
+      <ul class="rank-list">
+        <% if (ranking && ranking.length > 3) { %>
+          <% ranking.slice(3).forEach((item, index) => { %>
+            <li>
+              <span><%= index + 4 %>. <%= item.student_id %> <%= item.username %></span>
+              <span><%= item.total_count %> up</span>
+            </li>
+          <% }) %>
+        <% } else { %>
+          <li><span>랭킹 데이터가 부족합니다.</span></li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+<% } else { %>
+  <!-- class일 때 -->
   <!-- 상위 3위 -->
   <div class="rank-wrapper">
   <% if (ranking && ranking.length >= 3) { %>
     <!-- 2 -->
     <div class="rank-item">
       <div class="circle">2<sup>nd</sup></div>
-      <div class="label"><%= ranking[1].class_name %></div>
+      <div class="label"><%= String(ranking[1].class_id).charAt(0) %>-<%= parseInt(ranking[1].class_id % 100) %></div>
       <div class="sub-info">
-        <img src="images/rank/note.png" alt="points icon" class="note-icon">
-        <%= ranking[1].total_points || ranking[1].total_count || 0 %> pts
+        <img src="/images/rank/note.png" alt="points icon" class="note-icon">
+        <%= ranking[1].total_count %> up
       </div>
     </div>
 
     <!-- 1 -->
     <div class="rank-item">
-      <img src="images/rank/crown.png" class="crown" alt="Crown">
+      <img src="/images/rank/crown.png" class="crown" alt="Crown">
       <div class="circle" style="margin-top: 0.5rem;">1<sup>st</sup></div>
-      <div class="label"><%= ranking[0].class_name %></div>
+      <div class="label"><%= String(ranking[0].class_id).charAt(0) %>-<%= parseInt(ranking[0].class_id % 100) %></div>
       <div class="sub-info">
-        <img src="images/rank/note.png" alt="points icon" class="note-icon">
-        <%= ranking[0].total_points || ranking[0].total_count || 0 %> pts
+        <img src="/images/rank/note.png" alt="points icon" class="note-icon">
+        <%= ranking[0].total_count %> up
       </div>
     </div>
 
     <!-- 3 -->
     <div class="rank-item">
       <div class="circle">3<sup>rd</sup></div>
-      <div class="label"><%= ranking[2].class_name %></div>
+      <div class="label"><%= String(ranking[2].class_id).charAt(0) %>-<%= parseInt(ranking[2].class_id % 100) %></div>
       <div class="sub-info">
-        <img src="images/rank/note.png" alt="points icon" class="note-icon">
-        <%= ranking[2].total_points || ranking[2].total_count || 0 %> pts
+        <img src="/images/rank/note.png" alt="points icon" class="note-icon">
+        <%= ranking[2].total_count %> up
       </div>
     </div>
   <% } %>
 </div>
 
-
   <!-- 나머지 -->
   <div class="list-container">
-    <div class="list-header">
-      <label for="sort">정렬:</label>
-      <select id="sort" name="sort">
-        <option value="submission">제출장순</option>
-      </select>
-    </div>
     <ul class="rank-list">
       <% if (ranking && ranking.length > 3) { %>
-        <% ranking.slice(3, 20).forEach((item, index) => { %>
+        <% ranking.slice(3).forEach((item, index) => { %>
           <li>
-            <span><%= index + 4 %>. <%= item.class_name %></span>
-            <span><%= item.total_points || item.total_count || 0 %> pts</span>
+            <span><%= index + 4 %>. <%= String(item.class_id).charAt(0) %>-<%= parseInt(item.class_id % 100) %></span>
+            <span><%= item.total_count %> up</span>
           </li>
         <% }) %>
       <% } else { %>
@@ -75,8 +126,9 @@
     </ul>
   </div>
 </div>
+<% } %>
 
   <%- include('partials/bottom_nav') %>
-  <script src="/js/rank.js"></script>
+  <script>document.getElementById('rank').className += ' active'</script>
 </body>
 </html>

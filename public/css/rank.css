@@ -33,6 +33,7 @@ body {
 
 .tab-button.active {
   font-weight: 700; /* 선택된 탭만 굵게 */
+  font-size: 1.1rem;
 }
 
 .tab-button:focus,
@@ -139,10 +140,18 @@ h2 {
 
 .label {
     text-align: center;
-    color: #444;
+    color: #000;
     line-height: 1.2;
     font-size: 1rem;
     font-weight: 700;
+}
+
+.flabel {
+    text-align: center;
+    color: #777;
+    line-height: 1.2;
+    font-size: 0.6rem;
+    font-weight: 500;
 }
 
 .rank-item:nth-child(2) img.crown {
@@ -156,31 +165,9 @@ h2 {
 
 .list-container {
     background-color: #E7F0FF;
-    border-radius: 3rem;
+    border-radius: 1rem;
     padding: 0.75rem 0;
     box-sizing: border-box;
-}
-
-.list-header {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0 1rem;
-    font-size: 0.875rem;
-    color: #444;
-    margin-bottom: 0.5rem;
-    margin-top: 1rem;
-}
-
-.list-header label {
-    margin-right: 0.5rem;
-}
-
-.list-header select {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
 }
 
 .rank-list {
