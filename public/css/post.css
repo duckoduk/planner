@@ -58,6 +58,12 @@ body {
     color: #000;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* 업로드 박스 */
 .upload-area {
     width: 80%;
