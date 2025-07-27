@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plog - 오픈 대기 중</title>
+    <style>
+        #con {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 2vh;
+            background-color: #007bff;
+            border-radius: 1rem;
+            padding: 1rem;
+            width: 90%;
+            margin: 0 -5%;
+        }
+
+        #subtitle {
+            color:#000;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        #subsubtitle {
+            color: #777;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        #title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color:#fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="con">
+        <div id="subtitle">Plog 오픈까지</div>
+        <div id="container">
+            <div id="title">0d 0h 0m 0s</div>
+        </div>
+        <div id="subsubtitle">2025.7.29 00:00</div>
+    </div>
+    
+    <script>
+        const timer = document.getElementById('title')
+        const openTime = new Date(2025, 6, 29, 0, 0, 0).getTime();
+        
+        const now = new Date().getTime(); // 현재 시간 (밀리초)
+        const cha = openTime - now; // 남은 시간 (밀리초)
+
+        if (cha < 0) {
+            timer.innerText = `오픈했습니다.`;
+            clearInterval(timeInterval)
+        }
+
+        // 시간 계산
+        const days = Math.floor(cha / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((cha % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((cha % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((cha % (1000 * 60)) / 1000);
+
+        // 결과 표시
+        timer.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        
+        const timeInterval = setInterval(() => {
+            const now = new Date().getTime(); // 현재 시간 (밀리초)
+            const cha = openTime - now; // 남은 시간 (밀리초)
+
+            if (cha < 0) {
+                timer.innerText = `오픈했습니다.`;
+                clearInterval(timeInterval)
+            }
+
+            // 시간 계산
+            const days = Math.floor(cha / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((cha % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((cha % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((cha % (1000 * 60)) / 1000);
+
+            // 결과 표시
+            timer.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+        }, 1000)
+    </script>
+</body>
+</html>

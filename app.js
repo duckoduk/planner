@@ -398,6 +398,12 @@ let [grade, classNum] = req.params.classId.split('-').map((s) => { return String
   return res.render('gallery', { images: imageData, rank: userData, classId: req.params.classId });
 
 })
+
+// 타이머
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'public', 'timer.html'))
+// })
+
 // login.html
 app.get('/', (req, res) => {
   if (req.session && req.session.userId) {
