@@ -400,17 +400,17 @@ let [grade, classNum] = req.params.classId.split('-').map((s) => { return String
 })
 
 // 타이머
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'public', 'timer.html'))
-// })
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'timer.html'))
+})
 
 // login.html
-app.get('/', (req, res) => {
-  if (req.session && req.session.userId) {
-    return res.redirect('/explore'); 
-  }
-  res.sendFile(path.join(__dirname, 'public', 'login.html'))
-})
+// app.get('/', (req, res) => {
+//   if (req.session && req.session.userId) {
+//     return res.redirect('/explore'); 
+//   }
+//   res.sendFile(path.join(__dirname, 'public', 'login.html'))
+// })
 
 // 로그아웃
 app.get('/logout', (req, res) => {
