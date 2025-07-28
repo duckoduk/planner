@@ -6,6 +6,10 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none
 }
 
 .logo-box {

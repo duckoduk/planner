@@ -3,6 +3,10 @@ body {
   margin: 0;
   padding: 0;
   background-color: #fff;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none
 }
 
 .container {
