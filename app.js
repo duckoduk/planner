@@ -195,7 +195,7 @@ app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, r
     }
 
     if (existingImages && existingImages.length > 0) {
-      return res.status(400).json({ message: '오늘은 이미 게시하셨습니다.' });
+      return res.status(400).json({ message: '오늘은 이미 게시하였습니다. 매일 오전 9시에 다시 게시 가능합니다.' });
     }
 
     // 파일명 변경

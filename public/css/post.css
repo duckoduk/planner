@@ -35,6 +35,7 @@ p {
 
 .al {
     justify-self: center;
+    align-items: center;
     width: 80%;
 }
 
