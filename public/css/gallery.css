@@ -69,8 +69,8 @@ body {
     align-items: center;
     justify-content: center;
     padding: 1.5rem 0 1rem;
-    padding-top: 4rem;
-    padding-bottom: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
 }
 
 .back-btn {
@@ -79,11 +79,13 @@ body {
     background: none;
     border: none;
     cursor: pointer;
+    padding: 0.25rem;
 }
 
 .back-btn img {
     width: 1.5rem;
     height: auto;
+    display: block;
 }
 
 .header h2 {

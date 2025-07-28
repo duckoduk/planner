@@ -55,10 +55,10 @@ body {
 }
 
 h2 {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 700;
     text-align: center;
-    color: #444;
+    color: #000;
     /* 아래 두 줄만 추가/수정 */
     margin-top: 4rem;
     /* 위쪽 여백을 4rem만큼 추가 */
