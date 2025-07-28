@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const termsCheckbox = document.getElementById('terms');
     const registerBtn = document.querySelector('.btn');
     const errorMessage = document.getElementById('error-message');
-
+    const first = [32, 32, 32, 32, 32, 32, 31, 31, 31, 31, 31, 31]
+    const second = [33, 33, 33, 31, 32, 35, 33, 35, 35, 33, 35, 33]
     registerBtn.addEventListener('click', async () => {// 회원가입 버튼 클릭 시
         console.log('회원가입 버튼 클릭됨');
         const number = numInput.value;
@@ -24,10 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const idString = String(number)
         const grade = parseInt(idString.charAt(0), 10);
         const classNum = parseInt(idString.substring(1, 3), 10);
+        const indiNum = parseInt(idString.substring(3, 5), 10)
         let numberError = false
         if (idString.length !== 5) numberError = true
         else if (grade < 1 || grade > 2) numberError = true
         else if (classNum > 12 || classNum < 1) numberError = true
+        else if (grade === 1 && indiNum > first[classNum - 1]) numberError = true // 1학년 인원수 제한
+        else if (grade === 2 && indiNum > second[classNum - 1]) numberError = true // 2학년 인원수 제한
         
         if (numberError) {
             errorMessage.textContent = '유효하지 않은 학번입니다.'
