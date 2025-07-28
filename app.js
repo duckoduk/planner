@@ -422,7 +422,7 @@ app.get('/logout', (req, res) => {
     }
     // 클라이언트에게 성공 응답
     res.clearCookie('connect.sid'); // express-session 기본 쿠키 이름
-    res.sendFile(path.join(__dirname, 'public', 'login.html')); // 로그인 페이지로 리다이렉트
+    return res.redirect('/');
   });
 });
 
