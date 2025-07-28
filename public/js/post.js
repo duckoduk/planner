@@ -29,12 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
     fileInput.addEventListener('change', function(event) {// 파일이 선택되었을 때
         const file = event.target.files[0];// 첫 번째 파일을 가져옴
 
-        if (file && file.type.startsWith('image/')) {// 이미지 파일인지 확인
-        const reader = new FileReader();// FileReader 객체 생성
-        reader.onload = function(e) {// 파일 읽기가 완료되면
+        if (file && file.type.startsWith('image/') && (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/webp')) {// 이미지 파일인지 확인
+          const reader = new FileReader();// FileReader 객체 생성
+          reader.onload = function(e) {// 파일 읽기가 완료되면
             imagePreview.src = e.target.result;// 미리보기 이미지에 설정
-        };
-        reader.readAsDataURL(file);// 파일을 Data URL로 읽음
+          }
+          reader.readAsDataURL(file);// 파일을 Data URL로 읽음
+        } else {
+          alert('유효하지 않은 파일 형식입니다. 파일 유형은 jpeg, png, webp 중 하나여야 합니다.')
         }
     });
     // post
@@ -52,6 +54,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!file || !text) {
             alert('모든 항목을 입력해주세요!');
             return;
+        }
+
+        if (file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type !== 'image/webp') {
+          alert('유효하지 않은 파일 형식입니다. 파일 유형은 jpeg, png, webp 중 하나여야 합니다.')
+          return;
         }
 
         const formData = new FormData();
