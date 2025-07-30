@@ -175,9 +175,8 @@ app.get('/profile', isAuthenticated, async (req, res) => {
 app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, res) => {
   try {   
     const student_id = req.session.studentId;
-    const { text, total_time } = req.body;
+    const { text, total_time:totTime } = req.body;
     const file = req.file;
-
     // created_date 하는거
     const today = new Date()
     const nowDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
@@ -230,7 +229,7 @@ app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, r
     // 3. DB 테이블 삽입
     const { error: insertError } = await supabase
       .from('image')
-      .insert([{ student_id, image_link, text, total_time: Number(total_time), created_date: nowDate, username: req.session.username }]);
+      .insert([{ student_id, image_link, text, total_time: Number(totTime), created_date: nowDate, username: req.session.username }]);
 
     if (insertError) {
       console.error(insertError);
@@ -242,7 +241,7 @@ app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, r
     // class_data 테이블에서 해당 class_id 조회
     const { data: classData, error: selectError } = await supabase
       .from('class_data')
-      .select('total_count')
+      .select('total_count, total_time')
       .eq('class_id', classId)
       .single();
 
@@ -253,10 +252,11 @@ app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, r
 
     if (classData) {
       const newCount = classData.total_count + 1;
+      const newTime = classData.total_time + Number(totTime)
 
       const { error: updateError } = await supabase
         .from('class_data')
-        .update({ total_count: newCount })
+        .update({ total_count: newCount, total_time: Number(newTime) })
         .eq('class_id', classId);
 
       if (updateError) {
@@ -276,17 +276,17 @@ app.post('/upload-image', isAuthenticated, upload.single('image'), async (req, r
     // user_data 테이블 데이터 변경
     const { data: userData, error: userSelectError } = await supabase
       .from('user_data')
-      .select('total_count')
+      .select('total_count, total_time')
       .eq('student_id', student_id)
       .single();
 
     if (userData) {
       // 이미 존재하면 total_count +1로 업데이트
       const newUserCount = userData.total_count + 1;
-
+      const newUserTime = userData.total_time + Number(totTime)
       const { error: userUpdateError } = await supabase
         .from('user_data')
-        .update({ total_count: newUserCount })
+        .update({ total_count: newUserCount, total_time: Number(newUserTime) })
         .eq('student_id', student_id);
 
       if (userUpdateError) {
