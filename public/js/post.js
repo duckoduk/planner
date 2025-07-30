@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileInput = uploadArea.querySelector('input[type="file"]');
     const imagePreview = uploadArea.querySelector('img');
     const postbtn = document.querySelector('.post-btn')
+    let isUloading = false
 
     fileInput.addEventListener('change', function(event) {// 파일이 선택되었을 때
         const file = event.target.files[0];// 첫 번째 파일을 가져옴
@@ -42,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     // post
     postbtn.addEventListener('click', async () => {
+        if (isUloading) return
+        isUloading = true
         postbtn.disabled = true;
         const fileInput = document.querySelector('input[type="file"]');
         const file = fileInput.files[0];
